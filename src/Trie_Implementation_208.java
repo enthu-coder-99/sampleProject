@@ -5,7 +5,7 @@ public class Trie_Implementation_208 {
   static TrieNode root = new TrieNode('0', false);
 
   public static void main(String[] args) {
-    insert("app");
+   /* insert("app");
     System.err.println(search("app"));
 
     insert("apple");
@@ -16,12 +16,11 @@ public class Trie_Implementation_208 {
     insert("rental");
     System.err.println(search("apps"));
     System.err.println(search("ad"));
-    System.err.println(search("app"));
-
-
+    System.err.println(search("app"));*/
   }
 
-  public static void insert(String word) {
+
+  public static void insert_old_working1(String word) {
     TrieNode currentNode = root;
     char[] chars = word.toCharArray();
     for (int i = 0; i < chars.length; i++) {
@@ -38,7 +37,7 @@ public class Trie_Implementation_208 {
     }
   }
 
-  public static boolean search(String word) {
+  public static boolean search_old_working1(String word) {
     TrieNode currentNode = root;
     char[] chars = word.toCharArray();
     for (int i = 0; i < chars.length; i++) {
@@ -53,7 +52,7 @@ public class Trie_Implementation_208 {
     return currentNode.end;
   }
 
-  public static boolean startsWith(String prefix) {
+  public static boolean startsWith_old_working1(String prefix) {
     TrieNode currentNode = root;
     char[] chars = prefix.toCharArray();
     for (int i = 0; i < chars.length; i++) {

@@ -13,7 +13,6 @@ public class Possible_Bipartition_886 {
 
   public Map<Integer, List<Integer>> getGraph(int[][] dislikes) {
     Map<Integer, List<Integer>> graph = new HashMap();
-
     for (int i = 0; i < dislikes.length; i++) {
       int[] dislike = dislikes[i];
       int part_1 = dislike[0];
@@ -22,7 +21,6 @@ public class Possible_Bipartition_886 {
       if (!graph.containsKey(part_2)) graph.put(part_2, new ArrayList());
       graph.get(part_1).add(part_2);
       graph.get(part_2).add(part_1);
-
     }
     return graph;
   }

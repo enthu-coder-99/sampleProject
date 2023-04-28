@@ -12,17 +12,17 @@ public class ListNode {
 
   }
 
-  int val;
-  ListNode next;
+  public int val;
+  public ListNode next;
 
-  ListNode() {
+  public ListNode() {
   }
 
-  ListNode(int val) {
+  public ListNode(int val) {
     this.val = val;
   }
 
-  ListNode(int val, ListNode next) {
+  public ListNode(int val, ListNode next) {
     this.val = val;
     this.next = next;
   }
@@ -35,7 +35,7 @@ public class ListNode {
       sb.append(node.val + ",");
       node = node.next;
     }
-    System.err.println("Print= \n" + sb);
+    // System.err.println("Print= \n" + sb);
     return sb.toString();
   }
 
@@ -55,9 +55,4 @@ public class ListNode {
   public String toString() {
     return print();
   }
-}
-
-class ListNode1 {
-  int val;
-  listNodes.ListNode next;
 }

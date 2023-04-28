@@ -53,11 +53,11 @@ public class CommonLogging {
 
 
   public static void printArray(String msg, String[] strs) {
-    System.err.println("------" + msg + "----------");
+    System.out.println("------" + msg + "----------");
     for (int i = 0; i < strs.length; i++) {
-      System.err.print(strs[i] + ",");
+      System.out.print(strs[i] + ",");
     }
-    System.err.println("----------------");
+    System.out.println("----------------");
   }
 
   public static void printArray(String[] strs) {
@@ -65,21 +65,21 @@ public class CommonLogging {
   }
 
   public static void printArray(int[][] ints) {
-    System.err.println("-----Print started-----");
+    System.out.println("-----Print started-----");
     for (int i = 0; i < ints.length; i++) {
       for (int j = 0; j < ints[0].length; j++) {
-        System.err.println("[" + i + "," + j + "]=" + ints[i][j]);
+        System.out.println("[" + i + "," + j + "]=" + ints[i][j]);
       }
     }
-    System.err.println("----Print Ended-----");
+    System.out.println("----Print Ended-----");
   }
 
   public static void printArray(String msg, boolean[] booleans) {
-    System.err.println("------" + msg + "----------");
+    System.out.println("------" + msg + "----------");
     for (int i = 0; i < booleans.length; i++) {
-      System.err.print(booleans[i] + ",");
+      System.out.print(booleans[i] + ",");
     }
-    System.err.println("----------------");
+    System.out.println("----------------");
   }
 
   public static void printMap(Map map) {
@@ -88,10 +88,23 @@ public class CommonLogging {
 
   public static String printList(List list) {
     StringBuffer sb = new StringBuffer();
-    for (Object o : list) {
-      sb.append(o + ", ");
+    for (Object obj : list) {
+      sb.append(obj + ", ");
     }
-    System.err.println(sb);
+    System.out.println(sb);
+    return sb.toString();
+  }
+
+  public static String printListOfIntArray(String str, List<int[]> list) {
+    System.out.println("" + str);
+    StringBuffer sb = new StringBuffer();
+    for (int[] arry : list) {
+      for (int i = 0; i < arry.length; i++) {
+        sb.append(arry[i] + ", ");
+      }
+      sb.append("\n");
+    }
+    System.out.println(sb);
     return sb.toString();
   }
 
@@ -105,12 +118,15 @@ public class CommonLogging {
   }
 
   public static void print(int[][] ints) {
-    System.err.println("row=" + ints.length + " and col=" + ints[0].length);
+    System.err.println("----------------------------------- row=" + ints.length + " and col=" + ints[0].length + " -----");
     for (int i = 0; i < ints.length; i++) {
       for (int j = 0; j < ints[0].length; j++) {
-        System.err.println("[" + i + "," + j + "]=" + ints[i][j]);
+        System.err.print("dp[" + i + "," + j + "]=" + ints[i][j] + ", ");
       }
+      System.err.println("");
     }
+    System.err.println("------------------------------------------------------------------------------");
+
   }
 
   public static String replaceArrayBracketStr(String arrayStrWithBracket) {
@@ -127,8 +143,12 @@ public class CommonLogging {
     System.err.println(res);
   }
 
-  public static void printListOfList(List<List<Integer>> lists) {
-    lists.stream().forEach(list -> printList(list));
+  public static void printListOfListInt(List<List<Integer>> listsints) {
+    listsints.stream().forEach(list -> printList(list));
+  }
+
+  public static void printListOfListString(List<List<String>> listStrs) {
+    listStrs.stream().forEach(list -> printList(list));
   }
 
 }

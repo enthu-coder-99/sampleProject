@@ -126,16 +126,19 @@ public class TreeNode {
     this.right = right;
   }
 
-  public static void inOrderTraversal(TreeNode root) {
+  public static String inOrderTraversal(TreeNode root) {
     if (root == null)
-      return;
+      return null;
+    StringBuffer sb = new StringBuffer();
     inOrderTraversal(root.left);
-    System.err.print(root.val + ",, ");
+    sb.append(root.val + ", ");
+    System.err.print(root.val + ", ");
     inOrderTraversal(root.right);
+    return sb.toString();
   }
 
-  public void inOrderTraversal() {
-    inOrderTraversal(this);
+  public String inOrderTraversal() {
+    return inOrderTraversal(this);
   }
 
   @Override
@@ -144,6 +147,14 @@ public class TreeNode {
       "" + val +
       "), left=" + (left != null ? left.val : null) +
       ", right=" + (right != null ? right.val : null) +
+      '}';
+  }
+
+    public String fullTreeTraversal() {
+    return " TreeNode(" +
+      "" + val +
+      "), left=" + (left != null ? left.fullTreeTraversal() : null) +
+      ", right=" + (right != null ? right.fullTreeTraversal() : null) +
       '}';
   }
 }

@@ -10,22 +10,15 @@ public class Reorder_List_143 {
 
   // 11  23   35  47  59
   // 11  23   35  47  59 6null
-
   //13 25 37 49
 
   public static void reorderList(ListNode head) {
-    ListNode tail = head;
     ListNode slow = head;
     ListNode fast = head;
-
     while (slow != null && fast != null && fast.next != null) {
       slow = slow.next;
       fast = fast.next.next;
     }
-    System.err.println(slow.print());
-    System.err.println(fast.print());
-
-    if (1 == 1) return;
     // By this time, slow will be in the very middle of the ListNode
     // i.e N/2 for even number of total nodes and (N+1)/2 for odd number of total nodes in orignial head.
     // Now, let us revers the slow one...
@@ -59,7 +52,6 @@ public class Reorder_List_143 {
         mergedListNodeTail.next = tmp;
         mergedListNodeTail = mergedListNodeTail.next;
       }
-
     }
     return mergedListNodeHead.next;
   }
