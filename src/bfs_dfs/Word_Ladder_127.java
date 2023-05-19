@@ -16,20 +16,27 @@ public class Word_Ladder_127 {
 
   public static void main(String[] args) {
 
-      List<Object> l = new ArrayList<>();
-      l.add("String122");
-      l.add(22222);
-      l.add(new Integer((45)));
-      l.add(new BigInteger("56565"));
-       l.add(new TreeNode(2));
+    for (int i = 1; i < 8; i++) {
+      for (int j = 1; j <= 10; j++) {
+        System.out.println("Line num 22. i=" + i + ", j=" + j + " = " + i * j);
+      }
+    }
 
-    l.forEach(e-> System.err.println(e));
+    System.out.println("");
+    List<Object> l = new ArrayList<>();
+    l.add("String122");
+    l.add(22222);
+    l.add(new Integer((45)));
+    l.add(new BigInteger("56565"));
+    l.add(new TreeNode(2));
+
+    //l.forEach(e -> System.err.println(e));
 
 
     String beginWord = "hit";
     String endWord = "cog";
     List<String> wordList = List.of("hot", "dot", "tog", "cog");
-    System.err.println(new Word_Ladder_127().ladderLength(beginWord, endWord, wordList));
+    //System.err.println(new Word_Ladder_127().ladderLength(beginWord, endWord, wordList));
   }
 
   public int ladderLength(String beginWord, String endWord, List<String> wordList) {

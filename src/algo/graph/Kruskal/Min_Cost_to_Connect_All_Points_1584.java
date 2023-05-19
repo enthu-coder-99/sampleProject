@@ -1,7 +1,5 @@
 package algo.graph.Kruskal;
 
-import utils.CommonLogging;
-
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -51,46 +49,5 @@ public class Min_Cost_to_Connect_All_Points_1584 {
       }
     }
     return ans;
-  }
-}
-
-class UnionMerge {
-  int n;
-  int[] parent;
-  int[] size;
-
-  public UnionMerge(int _n) {
-    n = _n;
-    parent = new int[n];
-    size = new int[n];
-    for (int i = 0; i < n; i++) {
-      parent[i] = i;
-      size[i] = 1;
-    }
-  }
-
-  public int findParent(int cand) {
-    if (parent[cand] == cand) return cand;
-    return parent[cand] = findParent(parent[cand]);
-  }
-
-  public boolean merge(int c1, int c2) {
-    System.err.println("c1=" + c1 + ", c2=" + c2);
-    CommonLogging.printArray(parent);
-    int c1_p = findParent(c1);
-    CommonLogging.printArray(parent);
-
-    int c2_p = findParent(c2);
-    CommonLogging.printArray(parent);
-
-    if (c1_p == c2_p) return false;
-    if (size[c1_p] > size[c2_p]) {
-      parent[c2_p] = c1_p;
-      size[c1_p] += size[c2_p];
-    } else {
-      parent[c1_p] = c2_p;
-      size[c2_p] += size[c1_p];
-    }
-    return true;
   }
 }

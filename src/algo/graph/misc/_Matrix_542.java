@@ -7,18 +7,69 @@ import java.util.List;
 
 public class _Matrix_542 {
 
-  public static void main(String[] args) {
-    int[][] input = {{0, 0, 0}, {0, 1, 0}, {0, 0, 0}};
+  public static void main(String[] args) throws InterruptedException {
+    int[][] input = {{0, 0, 0}, {0, 1, 0}, {1, 1, 1}};
+    input = new int[][]{{1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {0, 0, 0}};
     int[][] res = new _Matrix_542().updateMatrix(input);
+
     for (int i = 0; i < res.length; i++)
       System.err.println(Arrays.toString(res[i]));
 
   }
 
+  public int[][] updateMatrix(int[][] mat) throws InterruptedException {
+    int row = mat.length;
+    int col = mat[0].length;
+    int[][] ans = new int[row][col];
+    Deque<int[]> queue = new ArrayDeque();
+    for (int i = 0; i < row; i++) {
+      for (int j = 0; j < col; j++) {
+        int cell = mat[i][j];
+        if (cell == 1) {
+          ans[i][j] = -1;
+        }
+        if (cell == 0) {
+          queue.add(new int[]{i, j});//having all solved or whose distance is already calculated. These elements should help tot their neighbor.
+        }
+      }
+    }
+    bfs(ans, queue);
+    return ans;
+  }
+
+  public void bfs(int[][] ans, Deque<int[]> queue) throws InterruptedException {
+    int row = ans.length;
+    int col = ans[0].length;
+    int level = 0;
+    int[][] nextCells = new int[][]{{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+    while (queue.size() > 0) {
+      int size = queue.size();
+      for (int l = 0; l < size; l++) {
+        int[] elm = queue.poll();
+        int i = elm[0];
+        int j = elm[1];// This current cell is always solved one so it will help in solving its neighbour
+        if (!isValidIndex(i, j, row, col)) continue;
+
+        System.err.println("i= " + i + ", j= " + j);
+        for (int[] next : nextCells) {
+          int i1 = i + next[0];
+          int j1 = j + next[1];
+          if (isValidIndex(i1, j1, row, col) && ans[i1][j1] != 0) {
+            System.err.println("Adding - i1= " + i1 + ", j1= " + j1);
+            queue.add(new int[]{i1, j1});
+          }
+        }
+      }
+      level++;
+      System.err.println("====================================================");
+      // Thread.sleep(5000L);
+    }
+  }
+
   /**
    * https://leetcode.com/problems/01-matrix/discuss/1369741/C%2B%2BJavaPython-BFS-DP-solutions-with-Picture-Clean-and-Concise-O(1)-Space
    */
-  public int[][] updateMatrix(int[][] mat) {
+  public int[][] updateMatrix_old(int[][] mat) {
     int row = mat.length;
     int col = mat[0].length;
     int[][] result = new int[row][col];
@@ -27,7 +78,6 @@ public class _Matrix_542 {
       for (int j = 0; j < col; j++) {
         int cell = mat[i][j];
         if (cell == 0) {
-          result[i][j] = 0;
           deque.offer(List.of(i, j));// Just add to queue so that we can process its neighbor first and then neighbour's neighbor and then neighbour's neighbor's neighbour and so on....
         } else {
           result[i][j] = -1;// To identify that is is not processed yet.
@@ -78,8 +128,7 @@ public class _Matrix_542 {
   }
 
 
-  private boolean isValidIndex(int i, int j, int row, int col) {
-    System.err.println("isValidIndex and i=" + i + " and j=" + j);
+  private static boolean isValidIndex(int i, int j, int row, int col) {
     if (i < 0 || j < 0 || i >= row || j >= col) {
       return false;
     }

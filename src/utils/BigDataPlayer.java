@@ -1,5 +1,7 @@
 package utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -10,11 +12,12 @@ import java.util.Properties;
 public class BigDataPlayer {
 
 
-  public static final String FILE_NAME = "/data.properties";
+  public static final String PROPS_FILE_NAME = "/data.properties";
+  public static final String JSON_FILE_NAME = "/data.json";
 
   public static int[] getIntData(String propertyName) {
     Properties props = new Properties();
-    InputStream inputStream = BigDataPlayer.class.getResourceAsStream(FILE_NAME);
+    InputStream inputStream = BigDataPlayer.class.getResourceAsStream(PROPS_FILE_NAME);
     try {
       props.load(inputStream);
     } catch (IOException e) {
@@ -26,6 +29,18 @@ public class BigDataPlayer {
       inputInts[i] = Integer.valueOf(propsString[i]);
     }
     return inputInts;
+  }
+
+  public static int[][] getArrayInt(String propertyName) {
+    try {
+      InputStream inputStream = BigDataPlayer.class.getResourceAsStream(JSON_FILE_NAME);
+      ObjectMapper objectMapper = new ObjectMapper();
+      JsonData jsonData = objectMapper.readValue(inputStream, JsonData.class);
+      return jsonData.getNodeFirst1768();
+    } catch (Throwable e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   public static void writeToLogFile1(String text) {
