@@ -9,7 +9,7 @@ import java.util.Map;
 public class Maximum_Path_Quality_of_a_Graph_2065 {
 
   public int maximalPathQuality(int[] values, int[][] edges, int maxTime) {
-    Map<Integer, Map<Integer, Integer>> adjListMap = AdjListUtil.getAdjWithWeight(edges);
+    Map<Integer, Map<Integer, Integer>> adjListMap = AdjListUtil.getAdjWithWeight(edges, true);
 
     Deque<int[]> deque = new ArrayDeque<>();
     deque.add(new int[]{0, 0, values[0]});

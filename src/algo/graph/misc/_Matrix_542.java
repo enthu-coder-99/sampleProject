@@ -14,10 +14,52 @@ public class _Matrix_542 {
 
     for (int i = 0; i < res.length; i++)
       System.err.println(Arrays.toString(res[i]));
-
   }
 
-  public int[][] updateMatrix(int[][] mat) throws InterruptedException {
+  public int[][] updateMatrix(int[][] mat) {
+    int row = mat.length;
+    int col = mat[0].length;
+    int[][] ans = new int[row][col];
+    Deque<int[]> queue = new ArrayDeque();
+    int countOfOnes = 0;
+    for (int i = 0; i < row; i++) {
+      for (int j = 0; j < col; j++) {
+        int cell = mat[i][j];
+        if (cell == 0) {
+          queue.add(new int[]{i, j});
+        } else {
+          countOfOnes++;
+          ans[i][j] = -1;
+        }
+      }
+    }
+    int level = 1;
+    OUTER:
+    while (queue.size() > 0 && countOfOnes > 0) {
+      int size = queue.size();
+      for (int i = 0; i < size; i++) {
+        int[] zeroThCell = queue.poll();
+        int x = zeroThCell[0];
+        int y = zeroThCell[1];
+        int[][] nextCells = new int[][]{{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+        for (int[] nextCell : nextCells) {
+          int next_x = x + nextCell[0];
+          int next_y = y + nextCell[1];
+          if (isValidIndex(next_x, next_y, row, col) && mat[next_x][next_y] == 1 && ans[next_x][next_y] == -1) {
+            ans[next_x][next_y] = level;
+            countOfOnes--;
+            if (countOfOnes == 0) break OUTER;
+            queue.add(new int[]{next_x, next_y});
+
+          }
+        }
+      }
+      level++;
+    }
+    return ans;
+  }
+
+  public int[][] updateMatrix_old2(int[][] mat) throws InterruptedException {
     int row = mat.length;
     int col = mat[0].length;
     int[][] ans = new int[row][col];

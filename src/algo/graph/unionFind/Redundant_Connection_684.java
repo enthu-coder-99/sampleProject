@@ -7,8 +7,12 @@ public class Redundant_Connection_684 {
     UnionFind uf = new UnionFind(l);
     int[] result = new int[2];
     for (int[] edge : edges) {
-      boolean merge = uf.merge(edge[0], edge[1]);
-      if (!merge) result = edge;
+      int from = edge[0];
+      int to = edge[1];
+      if (!uf.merge(from, to)) {
+        result[0] = from;
+        result[1] = to;
+      }
     }
     return result;
   }

@@ -9,13 +9,17 @@ public class Minimum_Cost_to_Make_at_Least_One_Valid_Path_in_a_Grid_1368 {
   }
 
   public static int minCost(int[][] grid) {
+    return minCost_Dijkstra(grid);
+  }
+
+  public static int minCost_Dijkstra(int[][] grid) {
     int[][] directions = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     int row = grid.length;
     int col = grid[0].length;
-    int[][] dist = new int[row][col];
+    int[][] dist = new int[row][col];// cost to come to this point i.e. i, j from 0,0
 
     for (int i = 0; i < row; i++) {
-      for (int j = 0; i < col; j++) {
+      for (int j = 0; j < col; j++) {
         dist[i][j] = Integer.MAX_VALUE;
       }
     }
@@ -41,7 +45,6 @@ public class Minimum_Cost_to_Make_at_Least_One_Valid_Path_in_a_Grid_1368 {
           pq.add(new int[]{child_x, child_y, cost_to_reach_this_cell});
         } else {
           pq.add(new int[]{child_x, child_y, cost_to_reach_this_cell + 1});
-
         }
       }
     }

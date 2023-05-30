@@ -41,7 +41,7 @@ public class Number_of_Restricted_Paths_From_First_to_Last_Node_1786 {
   }
 
   public int countRestrictedPaths(int n, int[][] edges) {
-    Map<Integer, Map<Integer, Integer>> adjMap = AdjListUtil.getAdjWithWeight(edges);
+    Map<Integer, Map<Integer, Integer>> adjMap = AdjListUtil.getAdjWithWeight(edges, true);
     for (int i = 1; i <= n; i++) {
       System.out.println("i=" + i + " , child= " + adjMap.get(i));
     }
