@@ -8,37 +8,66 @@ import java.util.stream.Collectors;
 public class Partition_Equal_Subset_Sum_416 {
 
   public static void main(String[] args) {
-    int[] inputArray1 = new int[]{1, 5, 11, 5};
+    int[] inputArray1 = null;
     boolean result = false;
-    longestConsecutive(inputArray1);
+
+    inputArray1 = new int[]{1, 2, 5};
+    result = canPartition(inputArray1);
+    System.out.println("inputArray = " + Arrays.toString(inputArray1) + " , result = " + (result));
+
+    inputArray1 = new int[]{1, 5, 11, 5};
+    result = canPartition(inputArray1);
+    System.out.println("inputArray = " + Arrays.toString(inputArray1) + " , result = " + (result));
 
     result = canPartition(new int[]{14, 9, 8, 4, 3, 2});
-    System.err.println("inputArray4 result = " + (result ? "Correct" : "Incorrect"));
+    System.out.println("inputArray4 result = " + (result ? "Correct" : "Incorrect"));
 
     result = canPartition(inputArray1);
-    System.err.println("inputArray1 result = " + (result ? "Correct" : "Incorrect"));
+    System.out.println("inputArray1 result = " + (result ? "Correct" : "Incorrect"));
 
     int[] inputArray2 = new int[]{1, 2, 5};
     result = canPartition(inputArray2);
-    System.err.println("inputArray2 result = " + (result ? "Incorrect" : "Correct"));
+    System.out.println("inputArray2 result = " + (result ? "Incorrect" : "Correct"));
 
     int[] inputArray3 = new int[]{1, 2, 5};
     result = canPartition(inputArray3);
-    System.err.println("inputArray3 result = " + (result ? "Incorrect" : "Correct"));
+    System.out.println("inputArray3 result = " + (result ? "Incorrect" : "Correct"));
 
   }
 
   public static boolean canPartition(int[] nums) {
     int sum = Arrays.stream(nums).sum();
     if (sum % 2 != 0) return false;
-    Set<Integer> permutationDpSet = new HashSet<>();
-    permutationDpSet.add(0);
     //return canPartitionDP_sol1(nums, sum / 2, permutationDpSet);
-    return canPartitionDP_dp_sol3(nums, sum / 2);
+    return canPartitionDP(nums, sum / 2);
   }
 
-  // Working fine. Solution#1
-  public static boolean canPartitionDP_dp_sol3(int[] nums, int targetSum) {
+  private static boolean canPartitionDP(int[] nums, int targetSum) {
+    System.out.println("TargetSum = " + targetSum + ", nums =" + Arrays.toString(nums));
+    if (targetSum < 0) return false;
+    boolean dp[] = new boolean[targetSum + 1];
+    dp[0] = true;
+    for (int i = 0; i < nums.length; i++) {
+      int num = nums[i];
+      System.out.println("num=" + num);
+      if (num > targetSum) continue;
+      // for (int j = 0; j <= targetSum - num; j--) {
+      for (int j = targetSum - num; j >= 0; j--) {
+        // WE should start "j" from the end (and not from the starting of nums[]).
+        // Otherwise recently modified values in DP will generate wrong result. i.e. try with [1,2,5] and it will generate wrong result.
+        dp[j + num] = dp[j + num] || dp[j];
+      }
+    }
+    for (int i = 0; i <= targetSum; i++) {
+      System.out.print("i=" + i + " dp[i]=" + dp[i] + ", ");
+    }
+    System.out.println("");
+    return dp[targetSum];
+  }
+
+
+  // Working fine. Solution#1 and dp bottom Up
+  public static boolean canPartitionDP_dp_sol3_best_solution(int[] nums, int targetSum) {
     boolean dp[] = new boolean[targetSum + 1];
     dp[0] = true;
     for (int i = 0; i < nums.length; i++) {
@@ -46,6 +75,8 @@ public class Partition_Equal_Subset_Sum_416 {
       if (num > targetSum) continue;
       if (num == targetSum) return true;
       for (int j = targetSum; j >= num; j--) {
+        // WE should start "j" from the end (and not from the starting of nums[]).
+        // Otherwise recently modified values in DP will generate wrong result. i.e. try with [1,2,5] and it will generate wrong result.
         // 10, 5,  15, 1 ,1
         dp[j] = dp[j] || dp[j - num];
       }
