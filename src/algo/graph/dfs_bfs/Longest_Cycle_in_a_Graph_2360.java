@@ -24,32 +24,26 @@ public class Longest_Cycle_in_a_Graph_2360 {
     int n = edges.length;
     boolean[] visited = new boolean[n];
     for (int i = 0; i < n; i++) {
-      int result_loc = dfs(edges, i, visited, new HashMap(), 0);
+      int result_loc = dfs(edges, i, new HashMap(), visited, 0);
       System.out.println("i=" + i + ", result_loc=" + result_loc);
       result = Math.max(result, result_loc);
     }
     return result;
   }
 
-  public int dfs(int[] edges, int from, boolean[] visited, Map<Integer, Integer> map, int distance) {
-    System.out.println("from=" + from + ", dist=" + distance);
-    if (edges[from] < 0) return -1;
-    visited[from] = true;
-    if (map.containsKey(from)) {
-      System.out.println("cycle found and from=" + from + ", map=" + map);
-      return (distance - map.get(from));
-    }
-    map.put(from, distance);
-    return dfs(edges, edges[from], visited, map, distance + 1);
-  }
+  public int dfs(int[] edges, int start, Map<Integer, Integer> distance,
+                 boolean[] visited, int dist) {
 
-  public int dfs1(int[] edges, int from, boolean[] visited, Map<Integer, Integer> map, int distance) {
-    if (edges[from] < 0 || visited[from]) return -1;
-    visited[from] = true;
-    if (map.containsKey(from)) {
-      return (distance - map.get(from));
-    }
-    return dfs1(edges, edges[from], visited, map, distance + 1);
+    System.out.println("start = " + start + ", dist= " + dist + ", distance= " + distance + " , visited=" + visited);
+    if (distance.containsKey(start))// This check should come first before visited check otherwise this method will always return -1.
+      return dist - distance.get(start);
+    distance.put(start, dist);
+
+    if (visited[start]) return -1;
+    visited[start] = true;
+
+    return dfs(edges, edges[start], distance, visited, dist + 1);
+
   }
 
   public int longestCycle1(int[] edges) {
