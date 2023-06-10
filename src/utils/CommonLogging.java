@@ -2,6 +2,7 @@ package utils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 public class CommonLogging {
 
@@ -151,4 +152,11 @@ public class CommonLogging {
     listStrs.stream().forEach(list -> printList(list));
   }
 
+  public static boolean isValidIndex(int i, int j, int row, int col) {
+    if (i < 0 || j < 0 || i >= row || j >= col) return false;
+    return true;
+  }
+  public void print(PriorityQueue<int[]> pq){
+    Integer[] ints = pq.toArray(new Integer[pq.size()]);
+  }
 }

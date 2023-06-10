@@ -10,6 +10,14 @@ public class Min_Cost_to_Connect_All_Points_1584 {
     System.err.println(minCostConnectPoints(points));
   }
 
+  // Revision 1
+  public static int minCostConnectPoints_rev1(int[][] points) {
+    int ans = 0;
+    return ans;
+  }
+
+  // Working fine and first successful
+  // Kruskal uses UnionMerge
   public static int minCostConnectPoints(int[][] points) {
     int ans = 0;
     int n = points.length;
@@ -21,7 +29,6 @@ public class Min_Cost_to_Connect_All_Points_1584 {
     };
 
     PriorityQueue<int[]> edges_pq = new PriorityQueue(adjacencyComparator);
-
     for (int i = 0; i < n; i++) {
       int[] pt = points[i];
       int x = pt[0];

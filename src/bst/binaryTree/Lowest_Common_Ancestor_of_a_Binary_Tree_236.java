@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
 
-  public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+  public TreeNode lowestCommonAncestor_236(TreeNode root, TreeNode p, TreeNode q) {
 
     return root;
   }
@@ -23,7 +23,6 @@ public class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
    * https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/discuss/65226/My-Java-Solution-which-is-easy-to-understand
    */
   public TreeNode buildChildParentMap_approach_2(TreeNode root, TreeNode p, TreeNode q) {
-
     if(root == null) return null;
     return root;
 
@@ -63,5 +62,12 @@ public class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
       q = childToParentMap.get(q);
     }
     return root;
+  }
+
+  public TreeNode lowestCommonAncestor_lc(TreeNode root, TreeNode p, TreeNode q) {
+    if (root == p || root == q || root == null) return root;
+    TreeNode left = lowestCommonAncestor_lc(root.left, p, q);
+    TreeNode right = lowestCommonAncestor_lc(root.right, p, q);
+    return left == null ? right : right == null ? left : root;
   }
 }
