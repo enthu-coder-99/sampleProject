@@ -4,12 +4,12 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
 import static algo.graph.util.AdjListUtil.getAdjWithWeight;
-import static algo.graph.util.AdjListUtil.getPQ;
 
 public class Cheapest_Flights_Within_K_Stops_787 {
 
@@ -17,9 +17,10 @@ public class Cheapest_Flights_Within_K_Stops_787 {
   public static void main(String[] args) {
     int[][] flights = null;
 
-    int src = 0, dst = 3, k = 1, n = 4;
-    flights = new int[][]{{0, 1, 100}, {1, 2, 100}, {2, 0, 100}, {1, 3, 600}, {2, 3, 200}};
-    System.out.println("Answer= " + findCheapestPrice(n, flights, src, dst, k));
+    int src = 0, dst = 2, k = 1, n = 3;
+    flights = new int[][]{{0, 1, 100}, {1, 2, 100}, {0, 2, 400}};
+    //System.out.println("Answer= " + findCheapestPrice(n, flights, src, dst, k));
+    System.err.println("Final Ans= " + findCheapestPrice(n, flights, src, dst, k));
 
     src = 6;
     dst = 0;
@@ -44,43 +45,80 @@ public class Cheapest_Flights_Within_K_Stops_787 {
     src = 10;
     dst = 1;
     k = 10;
+
+    n = 11;
+    flights = new int[][]{{0, 3, 3}, {3, 4, 3}, {4, 1, 3}, {0, 5, 1}, {5, 1, 100}, {0, 6, 2}, {6, 1, 100}, {0, 7, 1}, {7, 8, 1}, {8, 9, 1}, {9, 1, 1}, {1, 10, 1}, {10, 2, 1}, {1, 2, 100}};
+    src = 0;
+    dst = 2;
+    k = 4;
   }
 
   public static int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
 
     Map<Integer, Map<Integer, Integer>> adjMap = getAdjWithWeight(flights, false);
-    return callBFS(adjMap, n, src, dst, k);
-    // return dijkstra(src, dst, k, adjMap, n);
+    //return callBFS(adjMap, n, src, dst, k);
+    return use_Bellman_ford_algo(n, adjMap, src, dst, k);
   }
 
-  public static int dijkstra(int start, int destination, int maxStopAllowed, Map<Integer, Map<Integer, Integer>> adjMap, int n) {
-    System.out.println("\nstart= " + start + ", destination= " + destination + ", maxStopAllowed= " + maxStopAllowed + ", n= " + n);
-    PriorityQueue<int[]> pq = getPQ(0);// sort on based on cost from current source to  original source.
-    pq.add(new int[]{0, start, 0});// cost, starting city, no_of_stop_taken
-    boolean[] visited = new boolean[n];
-    visited[start] = true;
 
-    int[] memo = new int[n];
-    Arrays.fill(memo, Integer.MAX_VALUE);
-    memo[start] = 0;
-    while (pq.size() > 0) {
-      int[] node = pq.poll();
-      int totalCostTillHereFromOrigStart = node[0];
-      int from_city = node[1];
-      int no_of_stoppage_taken = node[2];
-      System.out.println("from_city= " + from_city + " , totalCostTillHereFromOrigStart= " + totalCostTillHereFromOrigStart + " , no_of_stoppage_taken= " + no_of_stoppage_taken);
-      if (no_of_stoppage_taken > (maxStopAllowed + 1)) {
-        System.out.println(from_city + " and Continue and no_of_stoppage_taken = " + no_of_stoppage_taken + " , visited= " + visited[from_city]);
-        continue;
+  public static int use_Bellman_ford_algo(int n, Map<Integer, Map<Integer, Integer>> adjMap, int start, int dest, int k) {
+    int[] dp_cost = new int[n];
+    Arrays.fill(dp_cost, Integer.MAX_VALUE);
+    dp_cost[start] = 0;
+
+    for (int i = 0; i <= k; i++) {
+      Set<Integer> fromAirportSet = adjMap.keySet();
+      int[] dp_cost_copy = Arrays.copyOf(dp_cost, n);
+      for (int fromAirport : fromAirportSet) {
+        if (dp_cost[fromAirport] == Integer.MAX_VALUE)
+          continue;// i.e. we did not reach to start airport yet so can not fly anywhere from this/current airport.
+        Map<Integer, Integer> toAirportFlights = adjMap.get(fromAirport);
+        Set<Integer> toAirportAndCostSet = toAirportFlights.keySet();
+        for (int toAirport : toAirportAndCostSet) {
+          int cost = toAirportFlights.get(toAirport);
+          dp_cost_copy[toAirport] = Math.min(dp_cost_copy[toAirport], dp_cost[fromAirport] + cost);
+        }
       }
-      if (from_city == destination) return totalCostTillHereFromOrigStart;
-      Set<Map.Entry<Integer, Integer>> neighFlightsMap = adjMap.getOrDefault(from_city, new HashMap<>()).entrySet();
-      for (Map.Entry<Integer, Integer> neighFlight : neighFlightsMap) {
-        Integer neighbor_city = neighFlight.getKey();
-        Integer cost_from_start_to_neighbor = neighFlight.getValue();
-        int totalCostTillNeigh = totalCostTillHereFromOrigStart + cost_from_start_to_neighbor;
-        System.out.println("PQ adding- neighbor_city=" + neighbor_city + ", totalCostTillNeigh= " + totalCostTillNeigh + ", ");
-        pq.add(new int[]{totalCostTillNeigh, neighbor_city, no_of_stoppage_taken + 1});
+      System.out.println(Arrays.toString(dp_cost_copy));
+      dp_cost = dp_cost_copy;
+    }
+    return dp_cost[dest];
+  }
+
+  /**
+   * https://leetcode.com/problems/cheapest-flights-within-k-stops/discuss/128776/5-ms-AC-Java-Solution-based-on-Dijkstra's-Algorithm
+   * -- Good article to read why plain Dijkstra wont work.
+   */
+  public static int dijkstra_original(int n, Map<Integer, Map<Integer, Integer>> adjMap, int src, int dst, int k) {
+    Map<Integer, List<int[]>> adj = new HashMap<>();
+    int[] stops = new int[n];
+    int[] cost = new int[n];
+    Arrays.fill(stops, Integer.MAX_VALUE);
+    Arrays.fill(cost, Integer.MAX_VALUE);
+    cost[src] = 0;
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+    // {dist_from_src_node, node, number_of_stops_from_src_node}
+    pq.offer(new int[]{0, src, 0});
+
+    while (!pq.isEmpty()) {
+      int[] node_details = pq.poll();
+      int distance = node_details[0];
+      int node = node_details[1];
+      int stepsTaken = node_details[2];
+      // We have already encountered a path with a lower cost and fewer stops,
+      // or the number of stops exceeds the limit.
+      if (node == dst)
+        return distance;
+      if (stepsTaken > stops[node] && cost[node] < distance) continue;
+      stops[node] = stepsTaken;
+      cost[node] = distance;
+      if (stepsTaken > k)
+        continue;
+
+      if (!adjMap.containsKey(node))
+        continue;
+      for (Map.Entry<Integer, Integer> entry : adjMap.getOrDefault(node, new HashMap<Integer, Integer>()).entrySet()) {
+        pq.offer(new int[]{distance + entry.getValue(), entry.getKey(), stepsTaken + 1});
       }
     }
     return -1;
@@ -92,7 +130,7 @@ public class Cheapest_Flights_Within_K_Stops_787 {
     int[] memo = new int[n];
     Arrays.fill(memo, Integer.MAX_VALUE);
     memo[src] = 0;
-    bfs(src, dst, k, n, memo, adjMap);
+    bfs_original(n, adjMap, src, dst, k, memo);
     for (int i = 0; i < n; i++) {
       System.out.print("memo_" + i + "= " + memo[i] + ", ");
     }
@@ -101,38 +139,37 @@ public class Cheapest_Flights_Within_K_Stops_787 {
   }
 
   // Working Fine.
-  public static void bfs(int source, int destination, int k, int n, int[] memo, Map<Integer, Map<Integer, Integer>> adjMap) {
+  public static void bfs_original(int n, Map<Integer, Map<Integer, Integer>> adjMap, int source, int destination, int maxStopAllowed, int[] memo) {
     Deque<int[]> deque = new ArrayDeque<>();
-    deque.add(new int[]{source, 0});// starting city, cost till this node from original Source.
+    deque.add(new int[]{source, 0, 0});// starting city, cost till this node from original Source.
 
-    int stoppage = 0;
-    while (deque.size() > 0 && stoppage <= k + 1) {
-      int size = deque.size();
-      for (int i = 0; i < size; i++) {
-        int[] stopDetails = deque.poll();
-        int city = stopDetails[0];
-        int costTillCity = stopDetails[1];
-        System.out.println("city= " + city + " , costTillCity= " + costTillCity);
-        memo[city] = Math.min(costTillCity, memo[city]);
-        if (source == destination || !adjMap.containsKey(city) || adjMap.get(city).size() == 0) continue;
-
-        Set<Map.Entry<Integer, Integer>> neighborFlightsMap = adjMap.get(city).entrySet();
-        for (Map.Entry<Integer, Integer> neighFlight : neighborFlightsMap) {
-          int neighborCity = neighFlight.getKey();
-          int costToNeighborCity = neighFlight.getValue();
-          int totalCostFromOrigStartToNeigbourCity = costToNeighborCity + costTillCity;
-          if (memo[neighborCity] < totalCostFromOrigStartToNeigbourCity) continue;
-          System.err.println("Adding in PQ. neighborCity= " + neighborCity + ", totalCostFromOrigStartToNeigbourCity= " + totalCostFromOrigStartToNeigbourCity);
-          deque.add(new int[]{neighborCity, totalCostFromOrigStartToNeigbourCity});
-        }
+    while (deque.size() > 0) {
+      int[] stopDetails = deque.poll();
+      int currentCity = stopDetails[0];
+      int costTillCurentCityFromOrigStart = stopDetails[1];
+      int stoppage = stopDetails[2];
+      System.out.println("currentCity= " + currentCity + " , costTillCurentCityFromOrigStart= " + costTillCurentCityFromOrigStart + ", stoppage = " + stoppage);
+      memo[currentCity] = Math.min(costTillCurentCityFromOrigStart, memo[currentCity]);
+      if (source == destination || stoppage > maxStopAllowed + 1) {
+        System.out.println("Continue...");
+        continue;
       }
-      stoppage++;
 
+      Set<Map.Entry<Integer, Integer>> neighborFlightsMap = adjMap.getOrDefault(currentCity, new HashMap<>()).entrySet();
+      for (Map.Entry<Integer, Integer> neighFlight : neighborFlightsMap) {
+        int nextCity = neighFlight.getKey();
+        int costToNextCityFromOrigStart = neighFlight.getValue();
+        int totalCostFromOrigStartToNeigbourCity = costToNextCityFromOrigStart + costTillCurentCityFromOrigStart;
+        if (memo[nextCity] < totalCostFromOrigStartToNeigbourCity) continue;
+        System.err.println("Adding in PQ. nextCity= " + nextCity + ", totalCostFromOrigStartToNeigbourCity= " + totalCostFromOrigStartToNeigbourCity);
+        deque.add(new int[]{nextCity, totalCostFromOrigStartToNeigbourCity, stoppage + 1});
+      }
     }
   }
 
   //Not working fine
-  public static int dfs(int src, int target, int costTillSrc, int stopTillHere, int maxStopAllowed, boolean[] visited, int[] memo,
+  public static int dfs(int src, int target, int costTillSrc, int stopTillHere, int maxStopAllowed,
+                        boolean[] visited, int[] memo,
                         Map<Integer, Map<Integer, Integer>> adjMap) {
     System.out.println("src= " + src);
     if (!adjMap.containsKey(src) || adjMap.get(src).size() == 0 || stopTillHere > maxStopAllowed) {

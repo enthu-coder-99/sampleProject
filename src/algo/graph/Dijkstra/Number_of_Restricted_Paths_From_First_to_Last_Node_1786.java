@@ -83,7 +83,7 @@ public class Number_of_Restricted_Paths_From_First_to_Last_Node_1786 {
   }
 
   // Calculate min distance of "N" the node from each node. It will be same as ony other ith node min distance from Nth node.
-  // i.e. Min distance from Nth node to 1st, 2ncd node is that same as min distance from 1st, 2nd node to Nth node.
+  // i.e. Min distance from Nth node to 1st, 2nd node is that same as min distance from 1st, 2nd node to Nth node.
   public int[] calculateDist(int n, Map<Integer, Map<Integer, Integer>> map) {
     int[] dist = new int[n + 1];
     Set<Integer> visited = new HashSet<>();

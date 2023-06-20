@@ -19,9 +19,47 @@ public class Longest_Palindromic_Substring_5 {
     System.err.println(input + " result = " + longestPalindrome(input));
   }
 
+  public static String longestPalindrome(String input) {
+    int l = input.length();
+    if (l <= 1) return input;
+    char[] chars = input.toCharArray();
+
+    String ans = "";
+
+    for (int i = 0; i < l; i++) {
+      char c = chars[i];
+      String newAns = getPalLengthWithMid(chars, i, l);
+      if (newAns.length() > ans.length())
+        ans = newAns;
+      while (i < (l - 1) && c == chars[i + 1]) ++i;
+
+    }
+    return ans;
+  }
+
+  private static String getPalLengthWithMid(char[] chars, int midIndex, int l) {
+    char c = chars[midIndex];
+
+    int left = midIndex;
+    int right = midIndex;
+    while (right < (l - 1) && c == chars[right + 1]) ++right;
+
+    while (left > 0 && right < (l - 1) && chars[left - 1] == chars[right + 1]) {
+      left--;
+      right++;
+    }
+
+    StringBuilder sb = new StringBuilder();
+    for (int i = left; i <= right; i++) {
+      sb.append(chars[i]);
+    }
+    return sb.toString();
+  }
+
+
   //"abcba"
   // i = 2 , left = -1. right= 5
-  public static String longestPalindrome(String s) {
+  public static String longestPalindrome_workingFine_old1(String s) {
     System.err.println("Input = " + s);
     if (s.length() < 2) {
       return s;
