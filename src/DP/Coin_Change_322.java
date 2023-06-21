@@ -135,7 +135,6 @@ public class Coin_Change_322 {
       return 0;
     int[] dp = new int[amount + 1];
     Arrays.fill(dp, amount + 1);
-    amount:
     for (int j = 0; j < coins.length; j++) {
       int coinDenomination = coins[j];
       for (int amount_i = coinDenomination; amount_i <= amount; amount_i++) {
@@ -146,8 +145,7 @@ public class Coin_Change_322 {
           dp[amount_i] = 1;
           continue;
         } else {
-          int currentCombination = 1 + dp[remainAmount];
-          dp[amount_i] = Math.min(currentCombination, dp[amount_i]);
+          dp[amount_i] = Math.min(1 + dp[remainAmount], dp[amount_i]);
         }
       }
     }
