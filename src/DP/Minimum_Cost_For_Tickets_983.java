@@ -1,11 +1,53 @@
 package DP;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Minimum_Cost_For_Tickets_983 {
 
+  public static void main(String[] args) {
+    Minimum_Cost_For_Tickets_983 obj = new Minimum_Cost_For_Tickets_983();
+    int[] days = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30, 31};
+    int[] costs = {2, 7, 15};
+    days = new int[]{1, 4, 6, 7, 8, 365};
+    System.out.println(obj.mincostTickets(days, costs));
+  }
+
+
   public int mincostTickets(int[] days, int[] costs) {
+    int l = days.length;
+    int[] dp = new int[400];//cost to travel dp
+    int daysIndex = 0;
+    //Let us start the days from 30 days forward for the better code readibility otherwise lot of places out of bound we have to handle.
+    for (int day_i = days[0] + 30;  day_i <= days[l - 1] + 30; day_i++) {
+      int day = days[daysIndex] + 30;
+      if (day_i == day) {
+        int day_1 = dp[day - 1];
+        int day_7 = dp[day - 7];
+        int day_30 = dp[day - 30];
+        dp[day_i] = getMin(day_1 + costs[0], day_7 + costs[1], day_30 + costs[2]);
+        System.out.println(day_i + "- Setting dp[day_i]= " + dp[day_i]);
+        daysIndex++;
+      } else {
+        dp[day_i] = dp[day_i - 1];
+        System.out.println(day_i + "- Copying dp[day_i]= " + dp[day_i]);
+
+      }
+    }
+    System.out.println(Arrays.toString(dp));
+    return dp[days[l - 1] + 30];
+  }
+
+  public int getMin(int[] i1) {
+    return Math.min(i1[0], Math.min(i1[1], i1[2]));
+  }
+
+  public int getMin(int i1, int i2, int i3) {
+    return Math.min(i1, Math.min(i2, i3));
+  }
+
+  public int mincostTickets_sol_first(int[] days, int[] costs) {
     int l = days.length;
     int cost_1 = costs[0];
     int cost_7 = costs[1];
@@ -36,15 +78,6 @@ public class Minimum_Cost_For_Tickets_983 {
     return Math.min(Math.min(num1, num2), num3);
   }
 
-  public static void main(String[] args) {
-    String s1 = "great";
-    String s2 = "rgeat";
-    s1 = "eebaacbcbcadaaedceaaacadccd";
-    s2 = "eadcaacabaddaceacbceaabeccd";
-    s1 = "abc";
-    s2 = "bac";
-    System.out.println(isScramble(s1, s2));
-  }
 
   static Map<String, Boolean> memo = new HashMap();
 
