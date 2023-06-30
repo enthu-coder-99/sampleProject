@@ -1,4 +1,4 @@
-package DP;
+package DP.targetSum;
 
 import java.util.Arrays;
 import java.util.HashSet;
