@@ -25,8 +25,6 @@ public class Number_of_Longest_Increasing_Subsequence_673 {
           int new_LIC_count = dp[j][1];
 
           int curr_LIC_length = dp[i][0];
-          int curr_LIC_count = dp[i][1];
-
           if (new_LIC_length > curr_LIC_length) {
             dp[i][0] = new_LIC_length;
             dp[i][1] = new_LIC_count;
