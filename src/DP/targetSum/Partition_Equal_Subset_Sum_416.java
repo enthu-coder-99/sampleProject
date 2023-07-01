@@ -48,14 +48,14 @@ public class Partition_Equal_Subset_Sum_416 {
     boolean dp[] = new boolean[targetSum + 1];
     dp[0] = true;
     for (int i = 0; i < nums.length; i++) {
-      int num = nums[i];
-      System.out.println("num=" + num);
-      if (num > targetSum) continue;
+      int num_i = nums[i];
+      System.out.println("num_i=" + num_i);
+      if (num_i > targetSum) continue;
       // for (int j = 0; j <= targetSum - num; j--) {
-      for (int j = targetSum - num; j >= 0; j--) {
+      for (int j = targetSum; j >= num_i; j--) {
         // WE should start "j" from the end (and not from the starting of nums[]).
         // Otherwise recently modified values in DP will generate wrong result. i.e. try with [1,2,5] and it will generate wrong result.
-        dp[j + num] = dp[j + num] || dp[j];
+        dp[j + num_i] = dp[j + num_i] || dp[j];
       }
     }
     for (int i = 0; i <= targetSum; i++) {
