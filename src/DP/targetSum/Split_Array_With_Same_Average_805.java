@@ -17,10 +17,9 @@ public class Split_Array_With_Same_Average_805 {
       int num = nums[index];
       Double exp = (double) index * sum % (l);
       System.out.println("index=" + index + ", num=" + num + ", sum=" + sum + ", exp= " + exp);
-
       if (exp == 0.0) {// AS per comment calculation in the last of this file.
-        System.out.println("Testing with index= " + index + ", exp=" + (index * sum /(l)) + ", num=" + num);
-        boolean b = isSubSetExist(index, index * sum /(l), nums);
+        System.out.println("Testing with index= " + index + ", exp=" + (index * sum / (l)) + ", num=" + num);
+        boolean b = isSubSetExist(index, index * sum / (l), nums);
         if (b) return true;
       }
     }
@@ -31,7 +30,6 @@ public class Split_Array_With_Same_Average_805 {
     int l = nums.length;
     System.out.println("subSetLength=" + subSetLength + ", targetSubSetSum=" + targetSubSetSum);
     boolean[][] dp = new boolean[subSetLength + 1][targetSubSetSum + 1];
-
     for (int i = 0; i < l; i++) {
       int num_i = nums[i];
       for (int j = targetSubSetSum; j >= num_i; j--) {
