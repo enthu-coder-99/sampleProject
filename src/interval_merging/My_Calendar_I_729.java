@@ -1,4 +1,4 @@
-package heap_Or_PriorityQueue;
+package interval_merging;
 
 import java.util.Map;
 import java.util.TreeMap;
