@@ -137,13 +137,6 @@ public class CommonLogging {
     return res;
   }
 
-  public static void main(String[] args) {
-    String input =
-      "";
-    String res = replaceArrayBracketStr(input);
-    System.err.println(res);
-  }
-
   public static void printListOfListInt(List<List<Integer>> listsints) {
     listsints.stream().forEach(list -> printList(list));
   }
@@ -156,7 +149,24 @@ public class CommonLogging {
     if (i < 0 || j < 0 || i >= row || j >= col) return false;
     return true;
   }
-  public void print(PriorityQueue<int[]> pq){
+
+  public void print(PriorityQueue<int[]> pq) {
     Integer[] ints = pq.toArray(new Integer[pq.size()]);
   }
+
+
+  public static void main(String[] args) {
+    String inputArrayStr = "[[4,3,4],[3,2,4],[1,8,9],[7,2,5]]";
+    sanitizeArray(inputArrayStr);
+  }
+
+  public static String sanitizeArray(String input) {
+    String ans = input.replaceAll("\\[", "{").replaceAll("]", "}");
+    System.out.println(ans);
+    System.out.println("int[] input = new int[]" + ans + ";");
+    System.out.println("int[][] input = new int[][]" + ans + ";");
+    return ans;
+  }
+
+
 }
