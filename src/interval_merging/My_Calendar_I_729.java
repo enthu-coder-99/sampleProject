@@ -15,6 +15,10 @@ public class My_Calendar_I_729 {
 
   //https://www.youtube.com/watch?v=_7B_HzJUE6E&t=36s
   public boolean book(int start, int end) {
+    return solution1(start, end);
+  }
+
+  public boolean solution1(int start, int end) {
     Map.Entry<Integer, Integer> ceilingEntry = memoMap.ceilingEntry(start);
     Map.Entry<Integer, Integer> floorEntry = memoMap.floorEntry(start);
 
@@ -23,4 +27,5 @@ public class My_Calendar_I_729 {
     memoMap.put(start, end);
     return true;
   }
+
 }
