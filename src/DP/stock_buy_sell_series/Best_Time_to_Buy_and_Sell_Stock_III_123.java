@@ -12,4 +12,8 @@ public class Best_Time_to_Buy_and_Sell_Stock_III_123 {
     return 0;
   }
 
+  public int sol_two_arrays(){
+    
+  }
+
 }
