@@ -15,7 +15,7 @@ public class BigDataPlayer {
   public static final String PROPS_FILE_NAME = "/data.properties";
   public static final String JSON_FILE_NAME = "/data.json";
 
-  public static int[] getIntData(String propertyName) {
+  private static Properties loadData() {
     Properties props = new Properties();
     InputStream inputStream = BigDataPlayer.class.getResourceAsStream(PROPS_FILE_NAME);
     try {
@@ -23,7 +23,17 @@ public class BigDataPlayer {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    String[] propsString = props.getProperty(propertyName).split(",");
+    return props;
+  }
+
+  public static String getStringData(String propertyName) {
+    Properties properties = loadData();
+    return properties.getProperty(propertyName);
+  }
+
+  public static int[] getIntData(String propertyName) {
+    Properties properties = loadData();
+    String[] propsString = properties.getProperty(propertyName).split(",");
     int[] inputInts = new int[propsString.length];
     for (int i = 0; i < propsString.length; i++) {
       inputInts[i] = Integer.valueOf(propsString[i]);

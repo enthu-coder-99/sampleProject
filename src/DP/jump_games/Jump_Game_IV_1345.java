@@ -60,7 +60,7 @@ public class Jump_Game_IV_1345 {
     while (deque.size() > 0) {
       Set<Integer> bfsCurrentLevelIndexList = deque.pop();
       Set<Integer> nextLevelIndexesList = new HashSet<>();
-//7,7,7,7,7,7,7,7,7,7,11
+      //7,7,7,7,7,7,7,7,7,7,11
       for (int currentLevelIndex : bfsCurrentLevelIndexList) {
         if (currentLevelIndex == (l - 1)) {
           return level;
