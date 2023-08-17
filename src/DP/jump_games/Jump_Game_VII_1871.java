@@ -1,4 +1,4 @@
-package DP;
+package DP.jump_games;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;

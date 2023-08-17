@@ -1,4 +1,4 @@
-package DP;
+package DP.jump_games;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

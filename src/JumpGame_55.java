@@ -6,20 +6,46 @@ public class JumpGame_55 {
   }
 
   public static boolean canJump(int[] nums) {
-    if (nums.length == 1) {
+    return sol_with_one_variable(nums);
+  }
+
+  public static boolean sol_with_two_variables(int[] nums) {
+    int l = nums.length;
+    if (l == 1) {
       return true;
     }
-    int maxJump = 0;
-    for (int i = 0; i < nums.length - 1; i++) {
-      if (i > maxJump) return false;
-      maxJump = Math.max(maxJump, (i + nums[i]));
-      if (maxJump >= nums.length - 1)
-        return true;
+    int maxJump = nums[0];
+    int nextMaxJump = nums[0];// After we reached to maxJump, we will choose nextMaxJump.
+
+    for (int index = 1; index < l; index++) {
+      int num = nums[index];
+      if (maxJump == index) {
+        maxJump = nextMaxJump;
+      }
+      nextMaxJump = Math.max(nextMaxJump, index + num);
+      if (nextMaxJump >= l - 1) return true;
+      if (nextMaxJump <= index) return false;
     }
     return false;
   }
 
-  public static boolean solution2(int[] nums) {
+
+  public static boolean sol_with_one_variable(int[] nums) {
+    int l = nums.length;
+    if (l == 1) {
+      return true;
+    }
+    int maxJump = -1;
+    for (int index = 0; index < nums.length; index++) {
+      int num = nums[index];
+      maxJump = Math.max(maxJump, index + num);
+      if (maxJump >= l - 1) return true;
+      if (maxJump <= index) return false;
+    }
+    return false;
+  }
+
+  public static boolean solution_justCheckIfWeCanCrossZero(int[] nums) {
     if (nums.length == 1) {
       return true;
     }

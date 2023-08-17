@@ -1,4 +1,4 @@
-package DP;
+package DP.jump_games;
 
 import java.util.ArrayDeque;
 import java.util.Comparator;
@@ -28,6 +28,58 @@ public class Jump_Game_VI_1696 {
     pq.remove(19);
     System.err.println(maxResult(new int[]{1, -1, -2, 4, -7, 3}, 2));//7,6,5,7,-4,3
 
+  }
+
+  // Working fine
+  public int maxResult_With_priorityQueue(int[] nums, int k) {
+    int l = nums.length;
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>(new Comparator<int[]>() {
+      @Override
+      public int compare(int[] o1, int[] o2) {
+        if (o1[0] == o2[0])
+          return o2[1] - o1[1];
+        return o2[0] - o1[0];
+      }
+    });
+    int[] dp = new int[l];
+    dp[l - 1] = nums[l - 1];
+
+    pq.offer(new int[]{nums[l - 1], l - 1});
+    for (int i = l - 2; i >= 0; i--) {
+      int num = nums[i];
+      int atMostIndexReached = i + k;
+      while (pq.size() > 0 && pq.peek()[1] > atMostIndexReached) {
+        pq.poll();
+      }
+      if (pq.size() > 0)
+        dp[i] = num + pq.peek()[0];
+      pq.offer(new int[]{dp[i], i});
+    }
+    return dp[0];
+  }
+
+  // Working fine
+  public int maxResult_With_SimpleQueue(int[] nums, int k) {
+    int l = nums.length;
+    Deque<Integer> deque = new ArrayDeque<>();// Push indexes of DP
+    int[] dp = new int[l];
+    dp[l - 1] = nums[l - 1];
+    deque.offer(l - 1);
+
+    for (int i = l - 2; i >= 0; i--) {
+      int num = nums[i];
+      int atMostIndexReached = i + k;
+      dp[i] = num + dp[deque.peek()];
+      while (deque.size() > 0 && deque.peek() > atMostIndexReached) {
+        deque.poll();
+      }
+
+      while (deque.size() > 0 && dp[deque.peekLast()] <= dp[i]) {
+        deque.pollLast();
+      }
+      deque.offer(i);
+    }
+    return dp[0];
   }
 
   public static int maxResult(int[] nums, int k) {
