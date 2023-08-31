@@ -17,7 +17,7 @@ public class Subarray_Sum_Equals_K_560 {
     arr = new int[]{1, 1, 1};
     System.err.println(subarraySum(arr, 2));
 
-
+    System.err.println((char)('A'+24));
     //{1,2,3,4,5,6)
     //(3,7,14,12,14,15,19,21)
     //ai - aj = k where i>
