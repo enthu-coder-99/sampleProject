@@ -156,7 +156,7 @@ public class CommonLogging {
 
 
   public static void main(String[] args) {
-    String inputArrayStr = "[[4,3,4],[3,2,4],[1,8,9],[7,2,5]]";
+    String inputArrayStr = "[[0,2],[4,6],[8,10],[1,9],[1,5],[5,9]]";
     sanitizeArray(inputArrayStr);
   }
 
