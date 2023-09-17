@@ -1,6 +1,6 @@
 package listNodes;
 
-import listNodes.ListNode;
+import utils.CommonLogging;
 
 public class Reverse_Linked_List_II_92 {
 
@@ -18,32 +18,50 @@ public class Reverse_Linked_List_II_92 {
     System.err.println("i3=" + i3);
 
     ListNode listNode = ListNode.add(new int[]{1, 2, 3, 4, 5, 6, 7, 8});
-    listNode.print();
-    reverseBetween(listNode, 4, 6);
+    ListNode ans = reverseBetween(listNode, 4, 6);
+    CommonLogging.print(ans);
+    listNode = ListNode.add(new int[]{3, 5});
+    ans = reverseBetween(listNode, 1, 2);
+    CommonLogging.print(ans);
   }
 
-  public static void reverseBetween(ListNode head, int left, int right) {
-    ListNode firstPartHead = null;
-    ListNode firstPartTail = null;
+  public static ListNode reverseBetween(ListNode head, int left, int right) {
+    if (right == left) return head;
 
-    ListNode reversedPartHead = null;
-    ListNode reversedPartTail = null;
-    ListNode remainingNode = head;
+    ListNode tail = head;
+    ListNode preNode = null;//#1- First part of new LinkedList. This one is final.This is node# 1
 
-    int index = 1;
-    while (index < left) {
-      if (firstPartHead == null) {
-        firstPartHead = head;
-        firstPartTail = head;
-      } else if (firstPartTail == null) {
-        firstPartTail = head;
+    for (int i = 1; i < left - 1; i++) {
+      tail = tail.next;
+      preNode = tail;
+    }
+
+    System.out.println("preNode= " + (preNode != null ? preNode.val : "NULL") + ", tail=" + tail.val);
+
+    ListNode middlePartTail = null;
+    ListNode middlePartHead = null;
+    tail = tail.next;//tail = 4
+
+    for (int i = left; i <= right; i++) {// i starting with 2
+      if (tail == null) continue;
+      ListNode tmp_tail = tail;
+      tail = tail.next;
+      if (middlePartTail == null) {
+        middlePartTail = tmp_tail;
+        middlePartHead = tmp_tail;
+        tmp_tail.next = null;
       } else {
-        firstPartTail = head.next;
-        head = head.next;
-        index++;
+        tmp_tail.next = middlePartHead;
+        middlePartHead = tmp_tail;
       }
     }
-    head = head.next;
+    ListNode postPart = tail;// #3- Final and last part, This one is final.This is node# 5
+    //tail--
+    System.out.println("middlePartHead= " + middlePartHead.val + ", middlePartTail= " + middlePartTail + ", postPart= " + postPart.val);
+    if (preNode != null)
+      preNode.next = middlePartHead;
+    middlePartTail.next = postPart;
+    return head;
   }
 
 }
