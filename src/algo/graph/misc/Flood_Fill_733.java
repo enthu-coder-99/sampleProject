@@ -3,26 +3,23 @@ package algo.graph.misc;
 public class Flood_Fill_733 {
 
   public int[][] floodFill(int[][] image, int sr, int sc, int color) {
-
-    int row = image.length;
-    int col = image[0].length;
-    for (int i = sr; i < row; i++) {
-      for (int j = sc; j < col; j++) {
-        int cellColor = image[i][j];
-        flipColor(image, sr, sc, row, col, color, cellColor);
-      }
-    }
+    int startingColor = image[sr][sc];
+    perform(image, sr, sc, startingColor, color);
     return image;
   }
 
-  public void flipColor(int[][] image, int i, int j, int row, int col, int newColor, int centerCellColor) {
-    if (i < 0 || j < 0 || i >= row || j >= col || image[i][j] != centerCellColor) {
-      return;
-    }
-    image[i][j] = newColor;
-    flipColor(image, i - 1, j, row, col, newColor, centerCellColor);
-    flipColor(image, i + 1, j, row, col, newColor, centerCellColor);
-    flipColor(image, i, j - 1, row, col, newColor, centerCellColor);
-    flipColor(image, i, j + 1, row, col, newColor, centerCellColor);
+
+  public void perform(int[][] image, int sr, int sc, int startingColor, int newColor) {
+
+    int row = image.length;
+    int col = image[0].length;
+    if (sr < 0 || sr >= row || sc < 0 || sc >= col) return;
+    int currentCOlor = image[sr][sc];
+    if (currentCOlor == newColor || currentCOlor != startingColor) return;
+    image[sr][sc] = newColor;
+    perform(image, sr + 1, sc, startingColor, newColor);
+    perform(image, sr - 1, sc, startingColor, newColor);
+    perform(image, sr, sc + 1, startingColor, newColor);
+    perform(image, sr, sc - 1, startingColor, newColor);
   }
 }
