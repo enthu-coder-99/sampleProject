@@ -56,6 +56,40 @@ public class Is_Graph_Bipartite_785 {
   }
 
   public boolean isBipartite(int[][] graph) {
+    int n = graph.length;
+    int[] color = new int[n];
+    for (int i = 0; i < n; i++) {
+      if (color[i] == 0) {
+        // Not colored yet....
+        if (!bfs(i, color, graph))
+          return false;
+      }
+    }
+    return true;
+  }
+
+  public boolean bfs(int start, int[] color, int[][] graph) {
+
+    Deque<Integer> deque = new ArrayDeque<>();
+    color[start] = 1;
+    deque.add(start);
+    while (deque.size() > 0) {
+      int node = deque.poll();
+      int[] neighbors = graph[node];
+      for (int nextNode : neighbors) {
+        if (color[nextNode] == 0) {
+          color[nextNode] = color[node] * -1;
+          deque.add(nextNode);
+        } else if (color[nextNode] != color[node]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+
+  public boolean sol1(int[][] graph) {
     int l = graph.length;
     int[] color = new int[l];
     // -1 - RED , +1 - BLUE, 0- No color
@@ -80,7 +114,6 @@ public class Is_Graph_Bipartite_785 {
       }
     }
     return true;
-
   }
 
 }

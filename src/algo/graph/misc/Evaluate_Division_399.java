@@ -68,11 +68,11 @@ public class Evaluate_Division_399 {
     visited.add(fromQuery);
 
     Double returnValue = -1.0;
-    Set<String> graphValueInternalMapKeySet = graph.get(fromQuery).keySet();
-    for (String graphValueInternalMapKey : graphValueInternalMapKeySet) {
-      if (visited.contains(graphValueInternalMapKey)) continue;
-      Double queryMultipler = graph.get(fromQuery).get(graphValueInternalMapKey);
-      Double subQueryResult = dfs(graphValueInternalMapKey, toQuery, visited, graph);
+    Set<String> toValuesMapKeySet = graph.get(fromQuery).keySet();
+    for (String toValuesMapKey : toValuesMapKeySet) {
+      if (visited.contains(toValuesMapKey)) continue;
+      Double queryMultipler = graph.get(fromQuery).get(toValuesMapKey);
+      Double subQueryResult = dfs(toValuesMapKey, toQuery, visited, graph);
       if (subQueryResult > 0) {
         returnValue = queryMultipler * subQueryResult;
         addValueMemoMap(fromQuery, toQuery, returnValue, graph);

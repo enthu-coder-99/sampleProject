@@ -1,5 +1,7 @@
 package utils;
 
+import listNodes.ListNode;
+
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -74,6 +76,20 @@ public class CommonLogging {
     }
     System.out.println("----Print Ended-----");
   }
+
+
+  public static void printArray(char[][] chars) {
+    System.out.println("-----Print started-----");
+    for (int i = 0; i < chars.length; i++) {
+      for (int j = 0; j < chars[0].length; j++) {
+        System.out.print(chars[i][j] + ", ");
+      }
+      System.out.println("");
+
+    }
+    System.out.println("----Print Ended-----");
+  }
+
 
   public static void printArray(String msg, boolean[] booleans) {
     System.out.println("------" + msg + "----------");
@@ -154,12 +170,6 @@ public class CommonLogging {
     Integer[] ints = pq.toArray(new Integer[pq.size()]);
   }
 
-
-  public static void main(String[] args) {
-    String inputArrayStr = "[[0,2],[4,6],[8,10],[1,9],[1,5],[5,9]]";
-    sanitizeArray(inputArrayStr);
-  }
-
   public static String sanitizeArray(String input) {
     String ans = input.replaceAll("\\[", "{").replaceAll("]", "}");
     System.out.println(ans);
@@ -168,5 +178,26 @@ public class CommonLogging {
     return ans;
   }
 
+  public static void print(ListNode listNode) {
+    while (listNode != null) {
+      System.out.print(listNode.val + ", ");
+      listNode = listNode.next;
 
+    }
+    System.out.println("");
+  }
+
+
+  public static void main(String[] args) {
+
+    int x = 10;
+    System.out.println("x value is " + x);
+    x = x + 5;
+    System.out.println("Again x value is " + x);
+    x = 122;
+    System.out.println("Again again x value is " + x);
+    x = x * 5;
+    System.out.println("Again again again x value is " + x);
+
+  }
 }
