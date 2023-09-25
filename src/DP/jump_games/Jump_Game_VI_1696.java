@@ -8,26 +8,37 @@ import java.util.PriorityQueue;
 public class Jump_Game_VI_1696 {
 
   public static void main(String[] args) {
-    PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
-    pq.offer(23);
-    pq.offer(1);
-    pq.offer(7);
-    pq.offer(3);
-    pq.offer(6);
-    pq.offer(5);
-    pq.offer(10);
-    pq.offer(1);
-    pq.offer(2);
-    pq.offer(3);
-    pq.offer(19);
-    pq.offer(15);
-    pq.offer(15);
-    pq.offer(15);
-    pq.offer(13);
-    pq.offer(1);
-    pq.remove(19);
-    System.err.println(maxResult(new int[]{1, -1, -2, 4, -7, 3}, 2));//7,6,5,7,-4,3
 
+    String[] strArray = new String[]{"Ram", null, null, "Lux", "Bha", "Shat", null, null, null, null, null, "Drass"};
+    int length = strArray.length;
+    int nullCount = 0;
+    int notNullCount = 0;
+
+   /* for (int i = 0; i < length; i++) {
+      String str = strArray[i];
+      System.out.println("indx= " + i + ", str= " + str);
+      if (str == null)
+        nullCount++;
+
+      if (str != null) {
+        notNullCount++;
+      }
+    }
+
+    System.out.println("nullCount= " + nullCount);
+    System.out.println("notNullCount= " + notNullCount);*/
+
+    int firstIndexValueIsNull = 0;
+    for (int i = 0; i < length; i++) {
+      String str = strArray[i];
+      System.out.println("indx= " + i + ", str= " + str);
+      if (str == null) {
+        firstIndexValueIsNull = i;
+        i = length;
+      }
+    }
+
+    System.out.println("firstIndexValueIsNull= " + firstIndexValueIsNull);
   }
 
   // Working fine

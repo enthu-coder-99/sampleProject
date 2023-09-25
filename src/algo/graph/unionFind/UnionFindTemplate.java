@@ -5,7 +5,6 @@ public class UnionFindTemplate {
   public int[] size;
   int count;
 
-
   /**
    * https://www.youtube.com/watch?v=wU6udHRIkcc
    * https://www.youtube.com/watch?v=aBxjDBC4M1U

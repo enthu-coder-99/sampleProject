@@ -161,8 +161,8 @@ public class CommonLogging {
     listStrs.stream().forEach(list -> printList(list));
   }
 
-  public static boolean isValidIndex(int i, int j, int row, int col) {
-    if (i < 0 || j < 0 || i >= row || j >= col) return false;
+  public static boolean isValidIndex(int new_x, int new_y, int row, int col) {
+    if (new_x < 0 || new_y < 0 || new_x >= row || new_y >= col) return false;
     return true;
   }
 
