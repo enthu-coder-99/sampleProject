@@ -9,6 +9,32 @@ import java.util.Set;
 public class Similar_String_Groups_839 {
 
 
+  public static void main(String[] args) {
+    String str = "shikha is a buddhi girl.";
+    char[] chars = str.toCharArray();
+    int l = chars.length;
+    int firstVowelIndex = -1;
+    int lastVowelIndex = -1;
+    for (int i = 0; i < l; i++) {
+      char c = chars[i];
+      if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+        firstVowelIndex = i;
+        break;
+      }
+    }
+
+    for (int i = l - 1; i >= 0; i--) {
+      char c = chars[i];
+      if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+        lastVowelIndex = i;
+        break;
+      }
+    }
+    System.out.println(str.substring(firstVowelIndex, lastVowelIndex + 1));
+
+  }
+
+
   public int numSimilarGroups(String[] strs) {
     int l = strs.length;
 
