@@ -10,7 +10,7 @@ import java.util.Map;
 public class Time_Needed_to_Inform_All_Employees_1376 {
 
   public int numOfMinutes(int n, int headID, int[] manager, int[] informTime) {
-    Map<Integer, List<Integer>> managerToSubsMap = buildSubsMap(manager);
+    Map<Integer, List<Integer>> managerToSubsMap = buildManageToEmployeesMap(manager);
     return dfs(managerToSubsMap, headID, informTime);
   }
 
@@ -49,12 +49,12 @@ public class Time_Needed_to_Inform_All_Employees_1376 {
   }
 
 
-  public Map<Integer, List<Integer>> buildSubsMap(int[] manager) {
-    Map<Integer, List<Integer>> managerToSubsMap = new HashMap();
+  public Map<Integer, List<Integer>> buildManageToEmployeesMap(int[] manager) {
+    Map<Integer, List<Integer>> managerToEmployeesMap = new HashMap();
     for (int i = 0; i < manager.length; i++) {
-      if (!managerToSubsMap.containsKey(manager[i])) managerToSubsMap.put(manager[i], new ArrayList<>());
-      managerToSubsMap.get(manager[i]).add(i);
+      if (!managerToEmployeesMap.containsKey(manager[i])) managerToEmployeesMap.put(manager[i], new ArrayList<>());
+      managerToEmployeesMap.get(manager[i]).add(i);
     }
-    return managerToSubsMap;
+    return managerToEmployeesMap;
   }
 }
