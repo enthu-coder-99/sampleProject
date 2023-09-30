@@ -41,8 +41,4 @@ public class AdjListUtil {
       }
     });
   }
-
-  public static void println(String str) {
-    System.err.println(str);
-  }
 }
