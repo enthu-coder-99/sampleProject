@@ -23,7 +23,7 @@ public class Lowest_Common_Ancestor_of_a_Binary_Tree_236 {
    * https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/discuss/65226/My-Java-Solution-which-is-easy-to-understand
    */
   public TreeNode buildChildParentMap_approach_2(TreeNode root, TreeNode p, TreeNode q) {
-    if(root == null) return null;
+    if (root == null) return null;
     return root;
 
   }

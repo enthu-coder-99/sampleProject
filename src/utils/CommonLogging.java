@@ -5,7 +5,6 @@ import listNodes.ListNode;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
-
 public class CommonLogging {
 
   public static int solution(int N) {
@@ -31,7 +30,6 @@ public class CommonLogging {
       }
     }
     System.out.println("result=" + result);
-
     return result;
   }
 
@@ -47,13 +45,11 @@ public class CommonLogging {
   public static void printArray(int[] ints) {
     printArray("", ints);
   }
-
   public static void printArray(boolean[] bs) {
     for (boolean b : bs)
       System.err.print(b + ",");
     System.err.println("");
   }
-
 
   public static void printArray(String msg, String[] strs) {
     System.out.println("------" + msg + "----------");
@@ -143,7 +139,6 @@ public class CommonLogging {
       System.err.println("");
     }
     System.err.println("------------------------------------------------------------------------------");
-
   }
 
   public static String replaceArrayBracketStr(String arrayStrWithBracket) {
