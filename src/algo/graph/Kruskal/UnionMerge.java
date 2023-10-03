@@ -71,28 +71,4 @@ public class UnionMerge {
     }
     return comp;
   }
-
-  public static PriorityQueue<int[]> getPQ(int indexToCompare) {
-    PriorityQueue<int[]> pq = new PriorityQueue(new Comparator<int[]>() {
-      @Override
-      public int compare(int[] o1, int[] o2) {
-        return o1[indexToCompare] - o2[indexToCompare];
-      }
-    });
-
-    return pq;
-  }
-
-  public static Map<Integer, List<Integer>> getAdjacencyList(int[][] edges) {
-    Map<Integer, List<Integer>> adjMap = new HashMap();
-    for (int[] edge : edges) {
-      int node1 = edge[0];
-      int node2 = edge[1];
-      if (!adjMap.containsKey(node1)) adjMap.put(node1, new ArrayList<>());
-      if (!adjMap.containsKey(node2)) adjMap.put(node2, new ArrayList<>());
-      adjMap.get(node1).add(node2);
-      adjMap.get(node2).add(node1);
-    }
-    return adjMap;
-  }
 }

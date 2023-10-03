@@ -1,5 +1,7 @@
 package algo.graph.Kruskal;
 
+import algo.graph.util.AdjListUtil;
+
 import java.util.PriorityQueue;
 
 public class Optimize_Water_Distribution_in_a_Village_1168 {
@@ -10,7 +12,7 @@ public class Optimize_Water_Distribution_in_a_Village_1168 {
   }
 
   public int sol1(int n, int[] wells, int[][] pipes) {
-    PriorityQueue<int[]> pq = UnionMerge.getPQ(0);
+    PriorityQueue<int[]> pq = AdjListUtil.getPQ(0);
     for (int[] pipe : pipes) {
       pq.add(pipe);
     }
@@ -38,7 +40,7 @@ public class Optimize_Water_Distribution_in_a_Village_1168 {
   }
 
   public int sol2(int n, int[] wells, int[][] pipes) {
-    PriorityQueue<int[]> pq = UnionMerge.getPQ(0);
+    PriorityQueue<int[]> pq = AdjListUtil.getPQ(0);
     for (int[] pipe : pipes) {
       pq.add(pipe);
     }

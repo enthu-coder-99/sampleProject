@@ -21,14 +21,14 @@ public class UnionFindTemplate {
     }
   }
 
-  int findParent(int val) {
+  public int findParent(int val) {
     if (parent[val] == -1) return val;
     else
       return parent[val] = findParent(parent[val]);// path Compression
   }
 
 
-  boolean merge(int n1, int n2) {
+  public boolean merge(int n1, int n2) {
     //System.err.println("merging n1=" + n1 + " and n2=" + n2);
     int parent_n1 = findParent(n1);
     int parent_n2 = findParent(n2);

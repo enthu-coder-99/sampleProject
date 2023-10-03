@@ -1,5 +1,7 @@
 package algo.graph.Kruskal;
 
+import algo.graph.util.AdjListUtil;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -27,7 +29,7 @@ public class Checking_Existence_of_Edge_Length_Limited_Paths_1697 {
       }
     });
 
-    PriorityQueue<int[]> pq = UnionMerge.getPQ(2);
+    PriorityQueue<int[]> pq = AdjListUtil.getPQ(2);
     // Sort Edges
     for (int i = 0; i < edgeList.length; i++) {
       int[] edge = edgeList[i];

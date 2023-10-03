@@ -6,6 +6,9 @@ import java.util.Comparator;
 public class The_Earliest_Moment_When_Everyone_Become_Friends_1101 {
 
   public static void main(String[] args) {
+
+    Integer l = Integer.valueOf("0000434");
+    System.err.println(l);
     int[] arry_ints = new int[10];
     int arry_ints_len = arry_ints.length;
     for (int i = 1; i < arry_ints_len; i++) {

@@ -1,33 +1,66 @@
 package Backtracking;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Generate_Parentheses_22 {
 
   public static void main(String[] args) {
-    System.err.println(generateParenthesis(3));
+    System.err.println(generateParenthesis(5));
   }
 
   public static List<String> generateParenthesis(int n) {
-    List<String> list = new ArrayList<String>();
-    backtrack(list, "", n, 0, 0);
-    return list;
+    Set<String> set = new HashSet<>();
+    bruteForce(new StringBuffer(), n, 0, 0, set);
+    System.out.println(set);
+    return new ArrayList<>(set);
   }
 
-  public static void backtrack(List<String> list, String str, int max, int open, int close) {
-    System.err.println(str);
-    if (str.length() == max * 2) {
-      list.add(str);
+  static int i = 1;
+
+  public static void bruteForce(StringBuffer sb, int n, int openingBracesCount,
+                                int closingBracesCount, Set<String> result) {
+
+    if (closingBracesCount > openingBracesCount) return;
+    if (openingBracesCount == n && closingBracesCount == n) {
+      result.add(sb.toString());
       return;
     }
-    if (open < max) {
-      System.err.println("#25 and str=" + str + " and open=" + open + " and close=" + close);
-      backtrack(list, str + "(", max, open + 1, close);
+
+    for (i = openingBracesCount; i < n; i++) {
+      sb.append("(");
+      bruteForce(sb, n, openingBracesCount + 1, closingBracesCount, result);
+      sb.deleteCharAt(sb.length() - 1);
     }
-    if (close < open) {
-      System.err.println("#29 and str=" + str + " and open=" + open + " and close=" + close);
-      backtrack(list, str + ")", max, open, close + 1);
+
+    for (int i = closingBracesCount; i < n; i++) {
+      sb.append(")");
+      bruteForce(sb, n, openingBracesCount, closingBracesCount + 1, result);
+      sb.deleteCharAt(sb.length() - 1);
+    }
+  }
+
+  public static void recursion(StringBuffer sb, int n, int openingBracesCount,
+                               int closingBracesCount, Set<String> result) {
+
+    if (closingBracesCount > openingBracesCount) return;
+    if (openingBracesCount == n && closingBracesCount == n) {
+      result.add(sb.toString());
+      return;
+    }
+
+    if (openingBracesCount < n) {
+      sb.append("(");
+      recursion(sb, n, openingBracesCount + 1, closingBracesCount, result);
+      sb.deleteCharAt(sb.length() - 1);
+    }
+
+    if (openingBracesCount > closingBracesCount) {
+      sb.append(")");
+      recursion(sb, n, openingBracesCount, closingBracesCount + 1, result);
+      sb.deleteCharAt(sb.length() - 1);
     }
   }
 }

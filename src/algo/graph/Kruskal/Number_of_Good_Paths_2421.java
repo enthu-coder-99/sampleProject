@@ -1,5 +1,7 @@
 package algo.graph.Kruskal;
 
+import algo.graph.util.AdjListUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +21,7 @@ public class Number_of_Good_Paths_2421 {
   public static int numberOfGoodPaths(int[] vals, int[][] edges) {
     int n = vals.length;
     UnionMerge um = new UnionMerge(n);
-    Map<Integer, List<Integer>> adjacencyList = UnionMerge.getAdjacencyList(edges);
+    Map<Integer, List<Integer>> adjacencyList = AdjListUtil.getAdjList(edges);
 
     TreeMap<Integer, List<Integer>> nodeValueToIndexMap = new TreeMap();
 

@@ -5,7 +5,10 @@ import listNodes.ListNode;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+
 public class CommonLogging {
+
+  int[][] directions = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
   public static int solution(int N) {
     // write your code in Java SE 8\
@@ -45,6 +48,7 @@ public class CommonLogging {
   public static void printArray(int[] ints) {
     printArray("", ints);
   }
+
   public static void printArray(boolean[] bs) {
     for (boolean b : bs)
       System.err.print(b + ",");
