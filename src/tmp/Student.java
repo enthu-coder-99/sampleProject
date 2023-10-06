@@ -10,6 +10,14 @@ public class Student {
   public Student() {
   }
 
+  public Student(int id, String fName, String lName, int yearOfBirth, String addharCard) {
+    this.id = id;
+    this.fName = fName;
+    this.lName = lName;
+    this.yearOfBirth = yearOfBirth;
+    this.addharCard = addharCard;
+  }
+
   public int getId() {
     return id;
   }

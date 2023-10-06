@@ -189,6 +189,11 @@ public class CommonLogging {
 
   public static void main(String[] args) {
 
+    String str = "[[1,0,0,0,0,0],[0,1,0,0,0,0],[0,0,1,0,0,0],[0,0,0,1,1,0],[0,0,0,1,1,0],[0,0,0,0,0,1]]\n" +
+      "[5,0]";
+
+    sanitizeArray(str);
+
     int x = 10;
     System.out.println("x value is " + x);
     x = x + 5;
