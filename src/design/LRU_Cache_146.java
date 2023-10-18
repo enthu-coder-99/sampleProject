@@ -22,65 +22,72 @@ class LRU_Cache_146 {
   int capacity;
   CacheNode head;// Latest inserted/accessed node at front/towards the head.
   CacheNode tail;
-  Map<Integer, CacheNode> cacheMap = new HashMap();
+  Map<Integer, CacheNode> map = new HashMap();
 
   public LRU_Cache_146(int _capacity) {
     capacity = _capacity;
     head = new CacheNode(-100, -100);
-    tail = new CacheNode(100, 100);
+    tail = new CacheNode(-100, -100);
     head.next = tail;
     tail.prev = head;
   }
 
-  public void put(int key, int value) {
-    System.err.println("-------put key=" + key + " value=" + value);
-    if (cacheMap.containsKey(key)) {
-      CacheNode oldNode = cacheMap.get(key);
-      removeNode(oldNode);
-    } else if (cacheMap.size() >= capacity) {
-      CacheNode leastUsedNode = tail.prev;
-      removeNode(leastUsedNode);
-    }
-    CacheNode newNode = new CacheNode(key, value);
-    addToHead(newNode);
-    cacheMap.put(key, newNode);
-    print();
-  }
-
   public int get(int key) {
-    System.err.println("------get key=" + key);
-    if (!cacheMap.containsKey(key)) return -1;
-    CacheNode oldNode = cacheMap.get(key);
-    removeNode(oldNode);
-    CacheNode newNode = new CacheNode(key, oldNode.val);
-    addToHead(newNode);
-    cacheMap.put(key, newNode);
-    print();
-    return newNode.val;
+    if (!map.containsKey(key)) return -1;
+    CacheNode valNode = map.get(key);// Newer nodes will go in the last/tail.
+
+    cutAndPushToEnd(valNode);
+    return valNode.val;
+
   }
 
-  public void removeNode(CacheNode node) {
-    System.err.println("removeNode, removeNode.key=" + node.key + ", removeNode.val=" + node.val);
-    CacheNode removedNode = cacheMap.remove(node.key);
+  private void cutAndPushToEnd(CacheNode valNode) {
+    //   cut off the valNode
+    CacheNode valNode_prev = valNode.prev;
+    CacheNode valNode_next = valNode.next;
 
-    node.prev.next = node.next;
-    node.next.prev = node.prev;
-    System.err.println("Deleted from map = " + node.key + " and removedNode=" + removedNode);
+    valNode_prev.next = valNode_next;
+    valNode_next.prev = valNode_prev;
+    pushToEnd(valNode);
+
   }
 
-  // Recently used or added node will come here.
-  public void addToHead(CacheNode node) {
-    CacheNode head_next = head.next;
-    head.next = node;
-    node.prev = head;
-    node.next = head_next;
-    head_next.prev = node;
+  private void pushToEnd(CacheNode valNode) {
+    // Push in the end
+    CacheNode tail_prev = tail.prev;
+
+    valNode.next = tail;
+    tail.prev = valNode;
+
+    tail_prev.next = valNode;
+    valNode.prev = tail_prev;
+
+  }
+
+  public void put(int key, int value) {
+    if (map.containsKey(key)) {
+      CacheNode valNode = map.get(key);
+      cutAndPushToEnd(valNode);
+      valNode.val = value;
+    } else {
+      if (map.size() >= capacity) {
+        CacheNode nodeToDelete = head.next;
+        // cut from the head..
+        head.next.next.prev = head;
+        head.next = head.next.next;
+        // remove from the Map also.
+        map.remove(nodeToDelete.key);
+      }
+      CacheNode newNode = new CacheNode(key, value);
+      pushToEnd(newNode);
+      map.put(key, newNode);
+    }
   }
 
   public void print() {
     head.iterateFromHead();
     tail.iterateFromTail();
-    System.err.println("cacheMap=" + cacheMap);
+    System.err.println("map=" + map);
   }
 }
 
