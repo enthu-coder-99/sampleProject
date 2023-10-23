@@ -1,3 +1,5 @@
+package interval_merging;
+
 import utils.CommonLogging;
 
 import java.util.*;
