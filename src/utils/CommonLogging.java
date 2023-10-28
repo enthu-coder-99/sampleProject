@@ -68,15 +68,13 @@ public class CommonLogging {
   }
 
   public static void printArray(int[][] ints) {
-    System.out.println("-----Print started-----");
     for (int i = 0; i < ints.length; i++) {
       for (int j = 0; j < ints[0].length; j++) {
-        System.out.println("[" + i + "," + j + "]=" + ints[i][j]);
+        System.out.print("[" + i + "," + j + "]= " + ints[i][j]+", ");
       }
+      System.out.println();
     }
-    System.out.println("----Print Ended-----");
   }
-
 
   public static void printArray(char[][] chars) {
     System.out.println("-----Print started-----");
