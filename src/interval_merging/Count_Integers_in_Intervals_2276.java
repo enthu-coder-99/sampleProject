@@ -2,7 +2,6 @@ package interval_merging;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.TreeMap;
 
 public class Count_Integers_in_Intervals_2276 {

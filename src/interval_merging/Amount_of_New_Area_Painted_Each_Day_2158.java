@@ -10,7 +10,7 @@ public class Amount_of_New_Area_Painted_Each_Day_2158 {
   public static void main(String[] args) {
     Amount_of_New_Area_Painted_Each_Day_2158 obj = new Amount_of_New_Area_Painted_Each_Day_2158();
     int[][] paints = new int[][]{{1, 4}, {5, 8}, {4, 7}};
-
+    paints = new int[][]{{1, 4}, {4, 5}, {0, 2}, {3, 5}};
     int[] ans = obj.amountPainted(paints);
     System.out.println("Ans= " + Arrays.toString(ans));
   }
@@ -26,11 +26,11 @@ public class Amount_of_New_Area_Painted_Each_Day_2158 {
       int end = paint[1];
 
       Map.Entry<Integer, Integer> startFloorEntry = treeMap.floorEntry(start);
-      Map.Entry<Integer, Integer> endFloorEntry   = treeMap.floorEntry(end);
+      Map.Entry<Integer, Integer> endFloorEntry = treeMap.floorEntry(end);
       int newStart = start;
       int newEnd = end;
 
-      if (startFloorEntry != null && startFloorEntry.getKey() < start && ) {
+      if (startFloorEntry != null && startFloorEntry.getValue() >= start) {
         newStart = startFloorEntry.getKey();
       }
 
