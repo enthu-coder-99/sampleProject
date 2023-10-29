@@ -1,9 +1,8 @@
 package interval_merging;
 
-import utils.CommonLogging;
-
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class Divide_Intervals_Into_Minimum_Number_of_Groups_2406 {
 
@@ -13,41 +12,33 @@ public class Divide_Intervals_Into_Minimum_Number_of_Groups_2406 {
     System.out.println(obj.minGroups(intervals));
   }
 
+  // Exactly same as Meetings Room - II
   public int minGroups(int[][] intervals) {
-    int ans = 0;
-    Arrays.sort(intervals, new Comparator<int[]>() {
+    return minMeetingRooms(intervals);
+  }
+
+  public int minMeetingRooms(int[][] intervals) {
+    PriorityQueue<Integer> pq = new PriorityQueue();
+
+    Comparator<int[]> comp = new Comparator<int[]>() {
       @Override
       public int compare(int[] o1, int[] o2) {
-        if (o1[0] == o2[0]) return o1[1] - o2[1];
+        if (o1[0] == o2[0])
+          return o1[1] - o2[1];
         return o1[0] - o2[0];
       }
-    });
+    };
+    Arrays.sort(intervals, comp);
 
-    int l = intervals.length;
-    CommonLogging.printArray(intervals);
-
-    for (int i = 0; i < l; i++) {
+    int ans = 0;
+    for (int i = 0; i < intervals.length; i++) {
       int[] interval = intervals[i];
-      int start_i = interval[0];
-      int end_i = interval[1];
-      int start_index = i;
 
-      for (int j = i + 1; j < l; j++) {
-        int[] interval_j = intervals[j];
-        int start_j = interval_j[0];
-        int end_j = interval_j[1];
-        if (start_j >= end_i) {
-          // Overlap interval
-        } else {
-          // if not overlap
-          break;
-        }
-      }
-
-      if (i > start_index) {
-        ans = Math.max(ans, i - start_index + 1);
-      }
+      while (pq.size() > 0 && pq.peek() < interval[0]) pq.poll();
+      pq.offer(interval[1]);
+      ans = Math.max(pq.size(), ans);
     }
     return ans;
+
   }
 }
