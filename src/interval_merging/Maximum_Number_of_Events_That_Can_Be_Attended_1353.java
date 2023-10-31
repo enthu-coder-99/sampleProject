@@ -46,7 +46,6 @@ public class Maximum_Number_of_Events_That_Can_Be_Attended_1353 {
       if (pq.size() == 0 && event_i >= l)
         break;
     }
-
     return ans;
   }
 }
