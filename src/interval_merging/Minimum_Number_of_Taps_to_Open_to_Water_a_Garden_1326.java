@@ -5,6 +5,12 @@ import java.util.Arrays;
 public class Minimum_Number_of_Taps_to_Open_to_Water_a_Garden_1326 {
 
   public int minTaps(int n, int[] ranges) {
+
+    return dp_sol1(n, ranges);
+  }
+
+  // DP working solution
+  private int dp_sol1(int n, int[] ranges) {
     int[] dp = new int[n + 1];
     Arrays.fill(dp, n + 2);
 
@@ -18,11 +24,9 @@ public class Minimum_Number_of_Taps_to_Open_to_Water_a_Garden_1326 {
       }
     }
     for (int i = 0; i <= n; i++) {
-
       if (dp[i] == n + 2)
         return -1;
     }
     return dp[n];
-
   }
 }

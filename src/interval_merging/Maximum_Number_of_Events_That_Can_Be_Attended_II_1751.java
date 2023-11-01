@@ -5,8 +5,8 @@ import java.util.Arrays;
 public class Maximum_Number_of_Events_That_Can_Be_Attended_II_1751 {
   public static void main(String[] args) {
     Maximum_Number_of_Events_That_Can_Be_Attended_II_1751 obj = new Maximum_Number_of_Events_That_Can_Be_Attended_II_1751();
-    int[][] input = new int[][]{{1, 2, 4}, {3, 4, 3}, {2, 3, 1}};
-    System.out.println("Ans=" + obj.maxValue(input, 2));
+    int[][] events = new int[][]{{1, 2, 4}, {3, 4, 3}, {2, 3, 1}};
+    System.out.println("Ans=" + obj.maxValue(events, 2));
   }
 
   public int maxValue(int[][] events, int k) {

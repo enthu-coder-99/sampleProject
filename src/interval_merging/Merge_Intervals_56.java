@@ -2,7 +2,7 @@ package interval_merging;
 
 import utils.CommonLogging;
 
-import java.util.*;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
@@ -55,8 +55,8 @@ public class Merge_Intervals_56 {
       int currentIntervalStart = currentInterval[0];
       if (lastIntervalEnd >= currentIntervalStart) {
         // Merge interval
-        if(currentInterval[1] > lastInterval[1])
-        lastInterval[1] = currentInterval[1];
+        if (currentInterval[1] > lastInterval[1])
+          lastInterval[1] = currentInterval[1];
       } else {
         //Insert this new interval
         output.add(currentInterval);
