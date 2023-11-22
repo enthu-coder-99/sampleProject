@@ -16,7 +16,6 @@ public class Test {
     System.err.println(hasLookp(map));
   }
 
-
   public static boolean hasLookp(HashMap<String, String> map) {
     Set<String> keySet = map.keySet();
     for (String key : keySet) {

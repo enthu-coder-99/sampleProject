@@ -1,4 +1,4 @@
-package algo.graph.dfs_bfs;
+package algo.graph.topoSort;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class Course_Schedule_207 {
     List<Integer> sequence = new ArrayList();
     while (deque.size() > 0) {
       int nodeWithNoIncoming = deque.poll();
-      System.err.println("nodeWithNoIncoming="+nodeWithNoIncoming);
+      System.err.println("nodeWithNoIncoming=" + nodeWithNoIncoming);
       sequence.add(nodeWithNoIncoming);// free nodes with no dependency/incoming
 
       List<Integer> dependentCourseList = graph[nodeWithNoIncoming];
