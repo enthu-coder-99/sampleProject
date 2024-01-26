@@ -1,27 +1,31 @@
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Subsets_II_90 {
 
   public static void main(String[] args) {
-    Integer[] integers = new Integer[5];
-    integers[2] = 123;
-    List<Integer> ints = Arrays.stream(integers).collect(Collectors.toList());
     System.err.println(subsetsWithDup(new int[]{1, 2, 3, 4, 4}));
   }
 
   public static List<List<Integer>> subsetsWithDup(int[] nums) {
     List<List<Integer>> resultList = new ArrayList<>();
     int length = nums.length;
-    resultList.add(List.of(nums[0]));
-    for (int i = 1; i < length; i++) {
-      int size = resultList.size();
-      for (int j = 0; j < size; j++) {
-        List<Integer> oldListCopy = new ArrayList<>(resultList.get(j));
-        oldListCopy.add(nums[i]);
-        resultList.add(oldListCopy);
+    resultList.add(new ArrayList<>());
+    int lastSubSetSize = 0;
+
+    for (int i = 0; i < length; i++) {
+      int currentNum = nums[i];
+      int startIndx = 0;
+      if (i > 0 && currentNum == nums[i - 1])
+        startIndx = lastSubSetSize;
+
+      lastSubSetSize = resultList.size();
+      for (int j = startIndx; j < lastSubSetSize; j++) {
+        List<Integer> oldListElement = resultList.get(j);
+        ArrayList newListElement = new ArrayList(oldListElement);
+        newListElement.add(currentNum);
+        resultList.add(newListElement);
       }
-      resultList.add(List.of(nums[i]));
     }
     resultList.add(new ArrayList<>());
     return resultList;

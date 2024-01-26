@@ -1,5 +1,6 @@
 package Backtracking;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,9 +14,29 @@ public class Combination_Sum_IV_377 {
 
   public static int combinationSum4(int[] nums, int target) {
     Map<Integer, Integer> memo = new HashMap<>();
-    calcCounter(nums, target, memo);
-    System.err.println("memo=" + memo);
-    return -1;
+    int ans = dp_bottom_up(nums, target);
+    System.out.println("ans=" + ans);
+    return ans;
+  }
+
+  public static int dp_bottom_up(int[] nums, int target) {
+    int[] dp = new int[target + 1];
+
+    for (int combSum = 1; combSum < target + 1; ++combSum) {// This should be in OUTER loop only.
+      System.out.println("\n------ combSum= " + combSum);
+      for (int num : nums) {// This should be in INNER loop only.
+        System.out.print("num= " + num);
+        if (num > combSum) continue;
+        if (num == combSum) {
+          dp[num]++;
+        } else {
+          dp[combSum] += dp[combSum - num];
+        }
+        System.out.print(", dp[combSum]= " + dp[combSum]);
+        System.out.println("\n" + Arrays.toString(dp));
+      }
+    }
+    return dp[target];
   }
 
   public static int calcCounter(int[] nums, int target, Map<Integer, Integer> memo) {
@@ -37,3 +58,5 @@ public class Combination_Sum_IV_377 {
     return count;
   }
 }
+
+

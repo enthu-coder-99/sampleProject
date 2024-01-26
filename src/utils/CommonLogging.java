@@ -187,20 +187,35 @@ public class CommonLogging {
 
 
   public static void main(String[] args) {
+    int[] cardPoints = new int[]{1, 2, 3, 4, 5, 6, 1};
+    int ans = maxScore(cardPoints, 3);
+    System.out.println("ans= " + ans);
+  }
 
-    String str = "[[1,0,0,0,0,0],[0,1,0,0,0,0],[0,0,1,0,0,0],[0,0,0,1,1,0],[0,0,0,1,1,0],[0,0,0,0,0,1]]\n" +
-      "[5,0]";
+  public static int maxScore(int[] cardPoints, int k) {
+    int l = cardPoints.length;
+    int[][] memo = new int[l][l];
+    int ans = recursion(cardPoints, k, 0, l - 1, memo);
+    printArray(memo);
+    return ans;
+  }
 
-    sanitizeArray(str);
+  public static int recursion(int[] cardPoints, int k, int start, int end, int[][] memo) {
+    if (k == 0 || start > end) return 0;
+    if (start == end) {
+      return memo[start][end] = cardPoints[start];
+    }
+    if (k == 1) {
+      return Math.max(cardPoints[start], cardPoints[end]);
+    }
+    if (memo[start][end] > 0) return memo[start][end];
 
-    int x = 10;
-    System.out.println("x value is " + x);
-    x = x + 5;
-    System.out.println("Again x value is " + x);
-    x = 122;
-    System.out.println("Again again x value is " + x);
-    x = x * 5;
-    System.out.println("Again again again x value is " + x);
+    int choice1 = recursion(cardPoints, k - 1, start + 1, end, memo);
+    int choice2 = recursion(cardPoints, k - 1, start, end - 1, memo);
 
+    memo[start][end] = Math.max(cardPoints[start] + choice1, cardPoints[end] + choice2);
+
+    System.out.println("Setting start= " + start + ", end= " + end + ",k= " + k + ", memo[start][end] = " + memo[start][end]);
+    return memo[start][end];
   }
 }

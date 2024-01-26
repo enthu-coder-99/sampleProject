@@ -1,5 +1,7 @@
 package interval_merging;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -9,7 +11,10 @@ import java.util.TreeMap;
 public class Car_Pooling_1094 {
 
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception{
+    Instant start = Instant.now();
+    System.out.println(start);
+    Thread.sleep(1000);
     Car_Pooling_1094 obj = new Car_Pooling_1094();
     int[][] input = new int[][]{{2, 1, 5}, {3, 3, 7}};
 
