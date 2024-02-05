@@ -10,6 +10,12 @@ public class Assignment1_01242024 {
 
   }
 
+
+  private int calcMax(int[] nums){
+
+    return -1;
+  }
+
   public static double calculateArea(double radius) {
     double area = radius * radius * 3.14;
     System.out.println("area = " + area);

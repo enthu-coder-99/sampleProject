@@ -1,5 +1,10 @@
 import utils.CommonLogging;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Kth_Largest_Element_In_Array_215 {
 
   public static void main(String[] args) {
@@ -7,26 +12,39 @@ public class Kth_Largest_Element_In_Array_215 {
   }
 
   public static int findKthLargest(int[] nums, int k) {
-    quickSelect(nums, 0, nums.length - 1, k);
-    return quickSelect(nums, 0, nums.length - 1, k);
+    List<Integer> numsList = Arrays.stream(nums).boxed().collect(Collectors.toList());
+    return quickSelect_myVersion(numsList, k);
   }
 
-  static int quickSelect_myVersion(int[] nums, int low, int high, int k) {
-    int pivot = low;
-    for (int j = low; j < high; j++) {
-      int num = nums[j];
-      if (num <= nums[high]) {
-        pivot++;
-        System.err.println(nums[high] + " is greater than " + nums[j] + " hence swapping " + nums[j] + " with " + nums[pivot] + " and new pivot=" + (pivot + 1));
-        swap(nums, j, pivot);
+  static int quickSelect_myVersion(List<Integer> nums, int k) {
+    int pivotNum = nums.get(0);
+    //Left to pivot all should be small or equal to pivot.
+    //Right side of pivot all should be greater than pivot.
+    List<Integer> higherThanPivot = new ArrayList<>();
+    List<Integer> lowerThanPivot = new ArrayList<>();
+    int l = nums.size();
+    for (int i = 0; i < l; i++) {
+      int num = nums.get(i);
+      if (num > pivotNum) {
+        higherThanPivot.add(num);
+      } else if (num < pivotNum) {
+        lowerThanPivot.add(num);
       }
     }
-    swap(nums, pivot, high);
-    int leftOverNumsCount = high - pivot + 1;
-    if (leftOverNumsCount > k) {
+
+    if (k <= higherThanPivot.size()) {
+      return quickSelect_myVersion(higherThanPivot, k);
     }
-    return -1;
+
+    int pivotNumSize = l - higherThanPivot.size() - lowerThanPivot.size();
+    if (k <= (higherThanPivot.size() + pivotNumSize)) {
+      return pivotNum;
+    }
+    return quickSelect_myVersion(lowerThanPivot, (k - pivotNumSize - higherThanPivot.size()));
   }
+
+  //50
+  //25, 10. 15 and k=40
 
   static int quickSelect(int[] nums, int low, int high, int k) {
     int pivot = low;
