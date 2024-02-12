@@ -7,6 +7,7 @@ public class Palindrome_Partitioning_131 {
 
   public static void main(String[] args) {
     String str = "aabb";
+    System.out.println("SUB= " + str.substring(2, 2));
     partition(str);
   }
 
@@ -17,6 +18,35 @@ public class Palindrome_Partitioning_131 {
     resultList.forEach(s1 ->
       System.err.println("S1=" + s1));
     return resultList;
+  }
+
+
+  public static List<List<String>> dp(String str) {
+
+    char[] chars = str.toCharArray();
+    int l = chars.length;
+    List<List<String>>[] dp = new ArrayList[l + 2];
+    dp[l - 1] = new ArrayList<>();
+    dp[l - 1].add(List.of(str.substring(l - 1)));
+    for (int i = l - 2; i >= 0; i--) {
+      dp[i] = new ArrayList<>();
+      //String subString = str.substring()
+      for (int j = i + 1; j <= l; j++) {
+        String str1 = str.substring(i, j);
+        if (isPalindrome(str1)) {
+          //Add a new Pallindrome series
+          List<List<String>> prevDPList = dp[j];
+          for (List<String> prevList : prevDPList) {
+
+            List<String> newListFor_i = new ArrayList<>();
+            newListFor_i.add(str1);
+            newListFor_i.addAll(prevList);
+            dp[i].add(newListFor_i);
+          }
+        }
+      }
+    }
+    return dp[0];
   }
 
   public static void recursion(int startIndex, String str, List<String> list,
@@ -39,7 +69,7 @@ public class Palindrome_Partitioning_131 {
         list.add(str1);
         String str2 = str.substring(i, l);
         System.err.println("Adding str1= " + str1 + ", str2= " + str2 + ", List= " + list);
-        recursion(i-1, str2, list, resultList);
+        recursion(i - 1, str2, list, resultList);
         list.remove(list.size() - 1);
       }
     }
